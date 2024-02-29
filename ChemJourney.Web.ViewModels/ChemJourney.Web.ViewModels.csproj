@@ -10,4 +10,8 @@
     <ProjectReference Include="..\ChemJourney.Common\ChemJourney.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PeriodicTable\" />
+  </ItemGroup>
+
 </Project>
