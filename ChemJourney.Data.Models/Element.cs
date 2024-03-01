@@ -19,21 +19,17 @@ namespace ChemJourney.Data.Models
         public string Symbol { get; set; } = string.Empty;
 
         [Required]
-        [Comment("The electron configuration of the element")]
-        public string ElectronConfiguration { get; set; } = string.Empty;
-
-        [Required]
         [Comment("The atomic mass of the element")]
-        public decimal? AtomicMass { get; set; }
+        public double? AtomicMass { get; set; }
 
         [Comment("The melting point of the element")]
-        public decimal? MeltingPoint { get; set; }
+        public double? MeltingPoint { get; set; }
 
         [Comment("The boiling point of the element")]
-        public decimal? BoilingPoint { get; set; }
+        public double? BoilingPoint { get; set; }
 
-        [Comment("The standart state of the element")]
-        public string? StandartState { get; set; } = string.Empty;
+        [Comment("The standard state of the element")]
+        public string? StandardState { get; set; } = string.Empty;
 
         public int ChemicalGroupBlockId { get; set; }
 
