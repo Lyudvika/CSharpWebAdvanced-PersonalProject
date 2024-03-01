@@ -20,7 +20,7 @@ namespace ChemJourney.Data.Models
 
         [Required]
         [Comment("The atomic mass of the element")]
-        public double? AtomicMass { get; set; }
+        public double AtomicMass { get; set; }
 
         [Comment("The melting point of the element")]
         public double? MeltingPoint { get; set; }
@@ -28,8 +28,9 @@ namespace ChemJourney.Data.Models
         [Comment("The boiling point of the element")]
         public double? BoilingPoint { get; set; }
 
+        [Required]
         [Comment("The standard state of the element")]
-        public string? StandardState { get; set; } = string.Empty;
+        public string StandardState { get; set; } = string.Empty;
 
         public int ChemicalGroupBlockId { get; set; }
 

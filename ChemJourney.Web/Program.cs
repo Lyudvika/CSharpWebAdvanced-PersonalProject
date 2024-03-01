@@ -1,6 +1,8 @@
+using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ChemJourney.Web.Infrastrucute.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 })
     .AddEntityFrameworkStores<ChemJourneyDbContext>();
+
+builder.Services.AddApplicationServices(typeof(IElementService));
 
 builder.Services.AddControllersWithViews();
 
