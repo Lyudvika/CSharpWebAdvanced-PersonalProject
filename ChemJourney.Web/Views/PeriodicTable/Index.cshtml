@@ -26,7 +26,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => e.Id >= 1 && e.Id <= 2))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -42,7 +42,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => e.Id >= 3 && e.Id <= 10))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;">
                         <b>@element.Symbol</b></abbr>
@@ -59,7 +59,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => e.Id >= 11 && e.Id <= 18))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -76,7 +76,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => e.Id >= 19 && e.Id <= 36))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -87,7 +87,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => e.Id >= 37 && e.Id <= 54))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -98,7 +98,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => (e.Id >= 55 && e.Id <= 56) || (e.Id >= 72 && e.Id <= 86)))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -114,7 +114,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => (e.Id >= 87 && e.Id <= 88) || (e.Id >= 104 && e.Id <= 118)))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -132,7 +132,7 @@
         <td rowspan="2" colspan="3" style="empty-cells: hide;"></td>
             @foreach (var element in Model.Where(e => e.Id >= 57 && e.Id <= 71))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span><br>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -143,7 +143,7 @@
         <tr style="font-size: large;">
             @foreach (var element in Model.Where(e => e.Id >= 89 && e.Id <= 103))
             {
-                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer;">
+                <td class="cell" onclick="location.href='@Url.Action("ElementDetails", "PeriodicTable", new { atomicNumber = element.Id })';" style="cursor: pointer; @(GetElementColorStyle(element.ChemicalGroupBlockId))">
                     <span style="font-size: 10px;">@element.Id</span>
                     <abbr style="font-size: 15px; text-align: center; display: block; margin: auto;"><b>@element.Symbol</b></abbr>
                     <div class="etext">@element.Name</div>
@@ -176,8 +176,38 @@
     }
 
     .cell {
-        border: 2px solid #000000;
+        border: 5px solid white;
         color: #000000;
     }
-
 </style>
+
+@functions {
+    string GetElementColorStyle(int categoryId)
+    {
+        switch (categoryId)
+        {
+            case 1:
+                return "background-color: #FFFFBB;";
+            case 2:
+                return "background-color: #FFC7C7;";
+            case 3:
+                return "background-color: #D1D1FF;";
+            case 4:
+                return "background-color: #ADFFFF;";
+            case 5:
+                return "background-color: #C2FFEB;";
+            case 6:
+                return "background-color: #B9DBFF;";
+            case 7:
+                return "background-color: #C6FFC6;";
+            case 8:
+                return "background-color: #E4F0C5;";
+            case 9:
+                return "background-color: #FFEFD5;";
+            case 10:
+                return "background-color: #FFE9C8;";
+            default:
+                return "";
+        }
+    }
+}

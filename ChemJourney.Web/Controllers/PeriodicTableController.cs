@@ -20,7 +20,15 @@ namespace ChemJourney.Web.Controllers
 
         public ActionResult ElementDetails(int atomicNumber)
         {
-            return View();
+			//ElementViewModel element = GetElementByAtomicNumber(atomicNumber);
+
+			//if (element == null)
+			//{
+				// Handle the case where the element is not found
+				//return NotFound();
+			//}
+
+			return View();
         }
     }
 }

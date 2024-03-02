@@ -24,6 +24,7 @@ namespace ChemJourney.Services.Data
                     Id = e.Id,
                     Name = e.Name,
                     Symbol = e.Symbol,
+                    ChemicalGroupBlockId = e.ChemicalGroupBlockId
                 }).ToArrayAsync();
 
             return elements;
