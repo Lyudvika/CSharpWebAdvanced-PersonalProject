@@ -18,17 +18,16 @@ namespace ChemJourney.Web.Controllers
             return View(viewModel);
         }
 
-        public ActionResult ElementDetails(int atomicNumber)
+        public async Task<ActionResult> ElementDetails(int atomicNumber)
         {
-			//ElementViewModel element = GetElementByAtomicNumber(atomicNumber);
+            ElementDetailsViewModel? element = await this.elementService.GetElementByAtomicNumber(atomicNumber);
 
-			//if (element == null)
-			//{
-				// Handle the case where the element is not found
-				//return NotFound();
-			//}
+			if (element == null)
+			{
+				return NotFound();
+			}
 
-			return View();
+			return View(element);
         }
     }
 }

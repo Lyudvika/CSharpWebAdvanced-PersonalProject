@@ -1,5 +1,183 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model ElementDetailsViewModel
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-rectangle {
+            width: 90%;
+            height: 80vh;
+            border: 2px solid #000;
+            margin: auto;
+            position: relative;
+        }
+
+        .inner-rectangle-left {
+            width: 50%;
+            height: 100%;
+            
+            position: absolute;
+            top: 0%;
+            left: 0%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .center-square {
+            width: 20rem;
+            height: 20rem;
+            @GetElementColorStyle(Model.ChemicalGroupBlockId);
+            border: 4px solid #000;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .atomic-number{
+            width: 85%;
+            font-size: 30px;
+            
+        }
+
+        .element-symbol{
+            font-size: 90px;
+        }
+
+        .element-name{
+            font-size: 45px;
+        }
+
+        .inner-rectangle-right {
+            width: 50%;
+            height: 100%;
+            
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+            text-align: justify;
+            padding: 80px;
+            gap: 2em;
+        }
+
+        .text-paragraph {
+            width: 100%;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .text-on-top-left {
+            font-size: 24px;
+            padding: 13px;
+        }
+
+        .bottom-line{
+            border-bottom: 1px solid black;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-rectangle">
+
+        <div class="text-on-top-left"><b>Properties</b></div>
+
+        <div class="inner-rectangle-left">
+
+            <div class="center-square">
+                <div class="atomic-number">@Model.Id</div>
+                <p class="element-symbol">@Model.Symbol</p>
+                <p class="element-name">@Model.Name</p>
+            </div>
+
+        </div>
+
+        <div class="inner-rectangle-right">
+            <div class="bottom-line">
+                <p class="text-paragraph">Atomic Mass: <strong><font color="#8B008B">@Model.AtomicMass</font></strong></p>
+            </div>
+
+            <div class="bottom-line">
+                <p class="text-paragraph">Standart State: <strong><font color="#8B008B">@Model.StandardState</font></strong></p>
+            </div>
+
+            <div class="bottom-line">
+                <p class="text-paragraph">Oxidation State: <strong><font color="#8B008B">@Model.OxidationStates</font></strong></p>
+            </div>
+
+            <div class="bottom-line">
+                <p class="text-paragraph">Chemical Group Block: 
+                    <strong>
+                        <font color="#8B008B">
+                            @Model.ChemicalGroupBlock.Name
+                        </font>
+                    </strong>
+                </p>
+            </div>
+
+            @if (Model.MeltingPoint != null)
+            {
+                <div class="bottom-line">
+                    <p class="text-paragraph">Melting Point: <strong><font color="#8B008B">@Model.MeltingPoint</font></strong></p>
+                </div>
+            }
+            @if (Model.BoilingPoint != null)
+            {
+                <div class="bottom-line">
+                    <p class="text-paragraph">Boiling Point: <strong><font color="#8B008B">@Model.BoilingPoint</font></strong></p>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+@functions {
+    string GetElementColorStyle(int categoryId)
+    {
+        switch (categoryId)
+        {
+            case 1:
+                return "background-color: #FFFFBB;";
+            case 2:
+                return "background-color: #FFC7C7;";
+            case 3:
+                return "background-color: #D1D1FF;";
+            case 4:
+                return "background-color: #ADFFFF;";
+            case 5:
+                return "background-color: #C2FFEB;";
+            case 6:
+                return "background-color: #B9DBFF;";
+            case 7:
+                return "background-color: #C6FFC6;";
+            case 8:
+                return "background-color: #E4F0C5;";
+            case 9:
+                return "background-color: #FFEFD5;";
+            case 10:
+                return "background-color: #FFE9C8;";
+            default:
+                return "";
+        }
+    }
 }

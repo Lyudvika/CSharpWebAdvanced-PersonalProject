@@ -1,5 +1,4 @@
-﻿using ChemJourney.Data.Models;
-using ChemJourney.Services.Data.Interfaces;
+﻿using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.PeriodicTable;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +27,33 @@ namespace ChemJourney.Services.Data
                 }).ToArrayAsync();
 
             return elements;
+        }
+
+        public async Task<ElementDetailsViewModel> GetElementByAtomicNumber(int atomicNumber)
+        {
+            ElementDetailsViewModel? element = await this.dbContext
+                .Elements
+                .Where(e => e.Id == atomicNumber)
+                .Select(e => new ElementDetailsViewModel
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Symbol = e.Symbol,
+                    AtomicMass = e.AtomicMass,
+                    ChemicalGroupBlockId = e.ChemicalGroupBlockId,
+                    MeltingPoint = e.MeltingPoint,
+                    BoilingPoint = e.BoilingPoint,
+                    StandardState = e.StandardState,
+                    OxidationStates = e.OxidationStates,
+                    ChemicalGroupBlock = new ChemicalGroupBlockViewModel
+                    {
+                        Id = e.ChemicalGroupBlock.Id,
+                        Name = e.ChemicalGroupBlock.Name,
+                    }
+                })
+                .FirstOrDefaultAsync();
+
+            return element;
         }
     }
 }

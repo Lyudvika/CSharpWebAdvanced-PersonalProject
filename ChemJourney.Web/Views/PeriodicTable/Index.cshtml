@@ -1,8 +1,7 @@
-﻿@using ChemJourney.Web.ViewModels.PeriodicTable
-@model IEnumerable<ElementViewModel>
+﻿@model IEnumerable<ElementViewModel>
 
 @{
-    ViewBag.Title = "Periodic Table";
+    ViewBag.Title = "THE PERIODIC TABLE";
 }
 
 <!DOCTYPE html>
@@ -19,7 +18,7 @@
     <table>
         <tr style="background-color: white;">
             <th colspan="18">
-                <h1>THE PERIODIC TABLE</h1>
+                <h1>@ViewBag.Title</h1>
             </th>
         </tr>
 

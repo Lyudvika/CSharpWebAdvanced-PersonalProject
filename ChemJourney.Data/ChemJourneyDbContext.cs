@@ -13,6 +13,7 @@
         }
 
         public DbSet<Element> Elements { get; set; } = null!;
+        public DbSet<ChemicalGroupBlock> ChemicalGroupBlocks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

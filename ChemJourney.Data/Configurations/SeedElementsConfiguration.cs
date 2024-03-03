@@ -8,7 +8,7 @@ namespace ChemJourney.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Element> builder)
         {
-            builder.HasData(this.GenerateElements());
+            builder.HasData(GenerateElements());
         }
 
         private Element[] GenerateElements()
