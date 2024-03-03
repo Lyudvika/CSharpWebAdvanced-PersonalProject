@@ -1,11 +1,6 @@
 ﻿using ChemJourney.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChemJourney.Data.Configurations
 {
@@ -54,6 +49,13 @@ namespace ChemJourney.Data.Configurations
             {
                 Id = 5,
                 Name = "Biochemistry"
+            };
+            categories.Add(category);
+
+            category = new Category()
+            {
+                Id = 6,
+                Name = "Undefined"
             };
             categories.Add(category);
 

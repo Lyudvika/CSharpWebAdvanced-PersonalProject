@@ -22,9 +22,9 @@ namespace ChemJourney.Data.Models
 
         [Required]
         [Comment("User Id of the person who gave the reply.")]
-        public int UserId { get; set; }
+        public Guid ReplierId { get; set; }
 
         [Comment("User who gave the reply.")]
-        public ApplicationUser User { get; set; } = null!;
+        public ApplicationUser Replier { get; set; } = null!;
     }
 }

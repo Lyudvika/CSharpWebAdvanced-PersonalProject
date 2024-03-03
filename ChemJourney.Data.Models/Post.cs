@@ -41,11 +41,11 @@ namespace ChemJourney.Data.Models
 
         [Required]
         [Comment("Id of the user who wrote the post.")]
-        public int UserId {  get; set; }
+        public Guid WriterId {  get; set; }
 
         [Required]
         [Comment("User who wrote the post.")]
-        public ApplicationUser User { get; set; } = null!;
+        public ApplicationUser Writer { get; set; } = null!;
 
         [Comment("Replies given to the post.")]
         public virtual ICollection<PostReply> PostReplies { get; set; }

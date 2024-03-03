@@ -24,8 +24,9 @@ namespace ChemJourney.Data.Migrations
 
             modelBuilder.Entity("ChemJourney.Data.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -133,6 +134,11 @@ namespace ChemJourney.Data.Migrations
                         {
                             Id = 5,
                             Name = "Biochemistry"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Undefined"
                         });
                 });
 
@@ -1660,8 +1666,8 @@ namespace ChemJourney.Data.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
                         .HasComment("Content of the post.");
 
                     b.Property<DateTime>("DateTime")
@@ -1670,27 +1676,79 @@ namespace ChemJourney.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Title of the post.");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
+                    b.Property<Guid>("WriterId")
+                        .HasColumnType("uniqueidentifier")
                         .HasComment("Id of the user who wrote the post.");
-
-                    b.Property<string>("UserId1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("WriterId");
 
                     b.ToTable("Posts");
 
                     b.HasComment("A post that an user can submit to the forum.");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Content = "Can someone explain the concept of resonance in organic chemistry and provide examples to illustrate its significance in the stability of molecules?",
+                            DateTime = new DateTime(2024, 3, 3, 23, 42, 42, 474, DateTimeKind.Utc).AddTicks(8167),
+                            Title = "Decoding Organic Resonance",
+                            WriterId = new Guid("0c732953-0a4f-400c-b82a-142a89e37de6")
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Content = "I'm struggling to grasp the concept of Gibbs free energy. How does it relate to spontaneity in chemical reactions, and what are the key factors that affect it?",
+                            DateTime = new DateTime(2024, 3, 3, 23, 42, 42, 474, DateTimeKind.Utc).AddTicks(8187),
+                            Title = "Demystifying Gibbs Free Energy",
+                            WriterId = new Guid("0c732953-0a4f-400c-b82a-142a89e37de6")
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Content = "What are the main differences between coordination compounds and complex ions? How do ligands influence the properties of coordination compounds?",
+                            DateTime = new DateTime(2024, 3, 3, 23, 42, 42, 474, DateTimeKind.Utc).AddTicks(8190),
+                            Title = "Unraveling Coordination Compounds",
+                            WriterId = new Guid("0c732953-0a4f-400c-b82a-142a89e37de6")
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            Content = "I need help understanding the principles behind chromatography techniques. How does high-performance liquid chromatography (HPLC) differ from gas chromatography (GC), and in what situations would one be preferred over the other?",
+                            DateTime = new DateTime(2024, 3, 3, 23, 42, 42, 474, DateTimeKind.Utc).AddTicks(8192),
+                            Title = "HPLC vs. GC: Need Guidance",
+                            WriterId = new Guid("466ef5f1-5313-4a18-a5ab-702f27231479")
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 5,
+                            Content = "Could someone explain the role of enzymes in biochemical reactions? How do factors like pH and temperature affect enzyme activity, and are there any real-world applications of this knowledge?",
+                            DateTime = new DateTime(2024, 3, 3, 23, 42, 42, 474, DateTimeKind.Utc).AddTicks(8197),
+                            Title = "Cracking the Enzyme Code",
+                            WriterId = new Guid("fea4df6c-fe3f-4947-b0de-06717b262e1e")
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 6,
+                            Content = "I recently came across the term 'nanotechnology' in the context of chemistry. Can someone shed light on how nanotechnology intersects with chemistry, and what are some notable applications or advancements in this interdisciplinary field?",
+                            DateTime = new DateTime(2024, 3, 3, 23, 42, 42, 474, DateTimeKind.Utc).AddTicks(8201),
+                            Title = "Nanotechnology",
+                            WriterId = new Guid("466ef5f1-5313-4a18-a5ab-702f27231479")
+                        });
                 });
 
             modelBuilder.Entity("ChemJourney.Data.Models.PostReply", b =>
@@ -1715,28 +1773,26 @@ namespace ChemJourney.Data.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
+                    b.Property<Guid>("ReplierId")
+                        .HasColumnType("uniqueidentifier")
                         .HasComment("User Id of the person who gave the reply.");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("ReplierId");
 
                     b.ToTable("PostReplies");
 
                     b.HasComment("Replies that are given to a post.");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -1760,7 +1816,7 @@ namespace ChemJourney.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1774,9 +1830,8 @@ namespace ChemJourney.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1785,7 +1840,7 @@ namespace ChemJourney.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1799,9 +1854,8 @@ namespace ChemJourney.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1810,7 +1864,7 @@ namespace ChemJourney.Data.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
@@ -1823,9 +1877,8 @@ namespace ChemJourney.Data.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -1834,13 +1887,13 @@ namespace ChemJourney.Data.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -1849,10 +1902,10 @@ namespace ChemJourney.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
@@ -1889,15 +1942,15 @@ namespace ChemJourney.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "User")
+                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Writer")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("WriterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
-                    b.Navigation("User");
+                    b.Navigation("Writer");
                 });
 
             modelBuilder.Entity("ChemJourney.Data.Models.PostReply", b =>
@@ -1906,23 +1959,25 @@ namespace ChemJourney.Data.Migrations
                         .WithMany("PostReplies")
                         .HasForeignKey("PostId");
 
-                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "User")
+                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Replier")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("ReplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Replier");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("ChemJourney.Data.Models.ApplicationUser", null)
                         .WithMany()
@@ -1931,7 +1986,7 @@ namespace ChemJourney.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("ChemJourney.Data.Models.ApplicationUser", null)
                         .WithMany()
@@ -1940,9 +1995,9 @@ namespace ChemJourney.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1955,7 +2010,7 @@ namespace ChemJourney.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("ChemJourney.Data.Models.ApplicationUser", null)
                         .WithMany()

@@ -27,10 +27,10 @@ namespace ChemJourney.Common
 
         public static class Post
         {
-            public const int TitleMaxLength = 30;
+            public const int TitleMaxLength = 50;
             public const int TitleMinLength = 5;
 
-            public const int ContentMaxLength = 150;
+            public const int ContentMaxLength = 300;
             public const int ContentMinLength = 20;
         }
 
@@ -38,6 +38,11 @@ namespace ChemJourney.Common
         {
             public const int ContentMaxLength = 150;
             public const int ContentMinLength = 20;
+        }
+
+        public static class DateTimeFormat
+        {
+            public const string DateFormat = "dd/MM/yyyy HH:mm";
         }
     }
 }

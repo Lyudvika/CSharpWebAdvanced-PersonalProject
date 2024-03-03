@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ChemJourney.Services.Data.Interfaces;
+using ChemJourney.Web.ViewModels.Forum;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ChemJourney.Web.Controllers
 {
     public class ForumController : Controller
     {
-        public IActionResult Index()
+        private readonly IPostService postService;
+
+        public ForumController(IPostService postService)
         {
-            return View();
+            this.postService = postService;
+        }
+
+        public async Task<IActionResult> All()
+        {
+            IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsAsync();
+            return View(viewModel);
         }
     }
 }

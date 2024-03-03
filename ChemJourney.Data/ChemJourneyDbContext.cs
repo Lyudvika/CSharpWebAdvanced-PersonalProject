@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Identity;
     using ChemJourney.Data.Configurations;
 
-    public class ChemJourneyDbContext : IdentityDbContext<ApplicationUser>
+    public class ChemJourneyDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ChemJourneyDbContext(DbContextOptions<ChemJourneyDbContext> options)
             : base(options)
@@ -28,10 +28,11 @@
         {
             builder.ApplyConfiguration(new ElementEntityConfiguration());
             builder.ApplyConfiguration(new ChemicalGroupBlockEntityConfiguration());
-            builder.ApplyConfiguration(new SeedElementsConfiguration());
+            builder.ApplyConfiguration(new SeedElementsEntityConfiguration());
 
             builder.ApplyConfiguration(new PostEntityConfiguration());
             builder.ApplyConfiguration(new CategoryEntityConfiguration());
+            builder.ApplyConfiguration(new SeedPostsEntityConfiguration());
 
             base.OnModelCreating(builder);
         }

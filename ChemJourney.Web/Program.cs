@@ -9,6 +9,7 @@ builder.Services.AddApplicationIdentity(builder.Configuration);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplicationServices(typeof(IElementService));
+builder.Services.AddApplicationServices(typeof(IPostService));
 
 WebApplication app = builder.Build();
 
