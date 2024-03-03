@@ -1,30 +1,13 @@
-using ChemJourney.Services.Data.Interfaces;
-using ChemJourney.Web.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using ChemJourney.Web.Infrastrucute.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-string connectionString = builder
-    .Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<ChemJourneyDbContext>(options =>
-    options.UseSqlServer(connectionString));
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
-    options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-    options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
-    options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
-    options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-})
-    .AddEntityFrameworkStores<ChemJourneyDbContext>();
-
-builder.Services.AddApplicationServices(typeof(IElementService));
+builder.Services.AddApplicationDbContext(builder.Configuration);
+builder.Services.AddApplicationIdentity(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddApplicationServices();
 
 WebApplication app = builder.Build();
 
