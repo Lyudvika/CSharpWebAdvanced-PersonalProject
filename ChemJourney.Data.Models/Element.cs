@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using static ChemJourney.Common.EntityValidationConstants.Element;
 
 namespace ChemJourney.Data.Models
 {
@@ -11,10 +12,12 @@ namespace ChemJourney.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(NameMaxLength)]
         [Comment("The number of the element")]
         public string Name { get; set; } = string.Empty;
 
         [Required]
+        [MaxLength(SymbolMaxLength)]
         [Comment("The symbol of the element")]
         public string Symbol { get; set; } = string.Empty;
 
@@ -29,15 +32,19 @@ namespace ChemJourney.Data.Models
         public double? BoilingPoint { get; set; }
 
         [Required]
+        [MaxLength(StandardStateMaxLength)]
         [Comment("The standard state of the element")]
         public string StandardState { get; set; } = string.Empty;
 
+        [Required]
         public int ChemicalGroupBlockId { get; set; }
 
+        [Required]
         [Comment("The chemical group block of the element")]
         public ChemicalGroupBlock ChemicalGroupBlock { get; set; } = null!;
 
         [Required]
+        [MaxLength(OxidationStatesStateMaxLength)]
         [Comment("The standart state of the element")]
         public string OxidationStates { get; set; } = string.Empty;
     }

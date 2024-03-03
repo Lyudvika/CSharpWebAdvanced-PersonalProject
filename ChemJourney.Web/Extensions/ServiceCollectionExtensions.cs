@@ -1,7 +1,6 @@
-﻿using ChemJourney.Web.Data;
-using Microsoft.AspNetCore.Identity;
+﻿using ChemJourney.Data.Models;
+using ChemJourney.Web.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -25,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
                 options.Password.RequireLowercase = configuration.GetValue<bool>("Identity:Password:RequireLowercase");

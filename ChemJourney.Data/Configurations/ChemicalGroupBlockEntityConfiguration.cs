@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ChemJourney.Data.Configurations
 {
-    public class ChemicalGroupBlockConfiguration : IEntityTypeConfiguration<ChemicalGroupBlock>
+    public class ChemicalGroupBlockEntityConfiguration : IEntityTypeConfiguration<ChemicalGroupBlock>
     {
         public void Configure(EntityTypeBuilder<ChemicalGroupBlock> builder)
         {

@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static ChemJourney.Common.EntityValidationConstants.ChemicalGroupBlock;
 
 namespace ChemJourney.Data.Models
 {
+
+    [Comment("The types of chemical group blocks that exist in the periodic table.")]
     public class ChemicalGroupBlock
     {
         public ChemicalGroupBlock()
@@ -19,9 +17,12 @@ namespace ChemJourney.Data.Models
         [Comment("The ID of the chemical group block.")]
         public int Id { get; set; }
 
+        [Required]
+        [MaxLength(NameMaxLength)]
         [Comment("The Name of the chemical group block.")]
         public string Name { get; set; } = string.Empty;
 
+        [Comment("Colletion of the elements.")]
         public virtual ICollection<Element> Elements { get; set; }
     }
 }

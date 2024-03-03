@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ChemJourney.Data.Configurations
 {
-    public class ElementConfiguration : IEntityTypeConfiguration<Element>
+    public class ElementEntityConfiguration : IEntityTypeConfiguration<Element>
     {
         public void Configure(EntityTypeBuilder<Element> builder)
         {

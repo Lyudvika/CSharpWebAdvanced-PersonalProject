@@ -4,6 +4,7 @@ using ChemJourney.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemJourney.Data.Migrations
 {
     [DbContext(typeof(ChemJourneyDbContext))]
-    partial class ChemJourneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240303195638_MakingForum")]
+    partial class MakingForum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,33 +109,6 @@ namespace ChemJourney.Data.Migrations
                     b.ToTable("Categories");
 
                     b.HasComment("Categories that a post might have.");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Organic Chemistry"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Physical Chemistry"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Analytical Chemistry"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Inorganic Chemistry"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Biochemistry"
-                        });
                 });
 
             modelBuilder.Entity("ChemJourney.Data.Models.ChemicalGroupBlock", b =>
