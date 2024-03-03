@@ -1,3 +1,4 @@
+using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Infrastrucute.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,7 @@ builder.Services.AddApplicationIdentity(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(typeof(IElementService));
 
 WebApplication app = builder.Build();
 
