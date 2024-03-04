@@ -33,9 +33,23 @@ namespace ChemJourney.Services.Data
 			return posts;
 		}
 
-		public Task<IEnumerable<PostAllViewModel>> GetPostsByCategoriesAsync(string category)
+		public async Task<IEnumerable<PostAllViewModel>> GetPostsByCategoryAsync(string category)
 		{
-			throw new NotImplementedException();
+			IEnumerable<PostAllViewModel> posts = await this.dbContext
+				.Posts
+				.Where(p => p.Category.Name == category)
+				.Select(p => new PostAllViewModel
+				{
+					Id = p.Id,
+					Title = p.Title,
+					Content = p.Content,
+					Category = p.Category.Name,
+					DateTime = p.DateTime.ToString(),
+					AuthorName = p.Writer.UserName,
+					RepliesCount = p.PostReplies.Count
+				}).ToArrayAsync();
+
+			return posts;
 		}
 
 		public async Task<PostDetailsViewModel> GetPostById(int postId)

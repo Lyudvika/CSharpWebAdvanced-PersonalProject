@@ -6,7 +6,7 @@ namespace ChemJourney.Services.Data.Interfaces
     public interface IPostService
     {
         Task<IEnumerable<PostAllViewModel>> GetPostsAsync();
-        Task<IEnumerable<PostAllViewModel>> GetPostsByCategoriesAsync(string category);
+        Task<IEnumerable<PostAllViewModel>> GetPostsByCategoryAsync(string category);
 
         Task<PostDetailsViewModel> GetPostById(int postId);
         Task<PostFormViewModel> AddPostAsync(PostFormViewModel post);

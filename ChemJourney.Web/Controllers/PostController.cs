@@ -30,5 +30,11 @@ namespace ChemJourney.Web.Controllers
 
 			return View(viewModel);
 		}
+
+        public async Task<IActionResult> AllByCategory(string category)
+        {
+			IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsByCategoryAsync(category);
+			return View(viewModel);
+		}
 	}
 }

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PostAllViewModel>
+
+<table class="table table-bordered table-hover">
+	<tbody>
+		@foreach (var post in Model)
+		{
+			<tr>
+				<td>
+						@post.Title
+				</td>
+				<td>
+						@post.AuthorName
+				</td>
+				<td>
+						@post.DateTime
+				</td>
+				<td>
+						@post.RepliesCount
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

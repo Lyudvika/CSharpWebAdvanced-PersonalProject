@@ -18,6 +18,10 @@
 				<td>
 					@post.RepliesCount	
 				</td>
+
+				<td>
+					<a asp-controller="Post" asp-action="AllByCategory" asp-route-category="@post.Category" class="btn btn-warning mb-2 w-100 p-3 fw-bold">@post.Category</a>
+				</td>
 			</tr>
 		}
 	</tbody>
