@@ -1,13 +1,12 @@
 ﻿namespace ChemJourney.Web.Data
 {
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
-    using ChemJourney.Data.Models;
-    using System.Reflection;
-    using Microsoft.AspNetCore.Identity;
-    using ChemJourney.Data.Configurations;
+	using ChemJourney.Data.Configurations;
+	using ChemJourney.Data.Models;
+	using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore;
 
-    public class ChemJourneyDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+	public class ChemJourneyDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ChemJourneyDbContext(DbContextOptions<ChemJourneyDbContext> options)
             : base(options)
@@ -24,7 +23,7 @@
 
         public DbSet<PostReply> PostReplies { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder builder)
+		protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ElementEntityConfiguration());
             builder.ApplyConfiguration(new ChemicalGroupBlockEntityConfiguration());

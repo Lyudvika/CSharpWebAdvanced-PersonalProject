@@ -1,0 +1,24 @@
+﻿@model IEnumerable<PostAllViewModel>
+
+<table class="table table-bordered table-hover">
+	<tbody>
+		@foreach(var post in Model)
+		{
+			<tr>
+				<td>
+				<td class="cell" onclick="location.href='@Url.Action("Details", "Post", new { postId = post.Id })';" style="cursor: pointer;)">
+						@post.Title
+				</td>
+				<td>
+					@post.AuthorName
+				</td>
+				<td>
+					@post.DateTime
+				</td>
+				<td>
+					@post.RepliesCount	
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

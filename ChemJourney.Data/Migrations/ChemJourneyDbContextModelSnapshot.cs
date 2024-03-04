@@ -105,7 +105,7 @@ namespace ChemJourney.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasComment("Categories that a post might have.");
 
@@ -159,7 +159,7 @@ namespace ChemJourney.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChemicalGroupBlocks");
+                    b.ToTable("ChemicalGroupBlocks", (string)null);
 
                     b.HasComment("The types of chemical group blocks that exist in the periodic table.");
 
@@ -268,7 +268,7 @@ namespace ChemJourney.Data.Migrations
 
                     b.HasIndex("ChemicalGroupBlockId");
 
-                    b.ToTable("Elements");
+                    b.ToTable("Elements", (string)null);
 
                     b.HasComment("The elements of the Periodic Table");
 
@@ -1690,7 +1690,7 @@ namespace ChemJourney.Data.Migrations
 
                     b.HasIndex("WriterId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
 
                     b.HasComment("A post that an user can submit to the forum.");
 
@@ -1783,7 +1783,7 @@ namespace ChemJourney.Data.Migrations
 
                     b.HasIndex("ReplierId");
 
-                    b.ToTable("PostReplies");
+                    b.ToTable("PostReplies", (string)null);
 
                     b.HasComment("Replies that are given to a post.");
                 });

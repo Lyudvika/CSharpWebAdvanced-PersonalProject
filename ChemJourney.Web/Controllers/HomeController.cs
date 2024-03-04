@@ -1,10 +1,9 @@
-﻿
-namespace ChemJourney.Web.Controllers
+﻿namespace ChemJourney.Web.Controllers
 {
-    using ChemJourney.Web.ViewModels.Home;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Diagnostics;
-    public class HomeController : Controller
+	using ChemJourney.Web.ViewModels.Home;
+	using Microsoft.AspNetCore.Mvc;
+	using System.Diagnostics;
+	public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 

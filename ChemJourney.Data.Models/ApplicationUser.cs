@@ -8,5 +8,7 @@ namespace ChemJourney.Data.Models
         {
             Id = Guid.NewGuid();
         }
+
+        public DateTime MemberSince { get; set; }
     }
 }

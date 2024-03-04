@@ -1,8 +1,6 @@
-﻿using static ChemJourney.Common.EntityValidationConstants.DateTimeFormat;
-
-namespace ChemJourney.Web.ViewModels.Forum
+﻿namespace ChemJourney.Web.ViewModels.Post
 {
-    public class PostAllViewModel
+	public class PostAllViewModel
     {
         public int Id { get; set; }
 
@@ -14,6 +12,8 @@ namespace ChemJourney.Web.ViewModels.Forum
 
         public string DateTime { get; set; } = string.Empty;
 
-        public string Writer { get; set; } = string.Empty;
+        public string AuthorName { get; set; } = string.Empty;
+
+        public int RepliesCount {  get; set; }
     }
 }

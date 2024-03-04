@@ -1,4 +1,4 @@
-﻿namespace ChemJourney.Web.ViewModels.Forum
+﻿namespace ChemJourney.Web.ViewModels.Post
 {
     public class CategoryViewModel
     {
