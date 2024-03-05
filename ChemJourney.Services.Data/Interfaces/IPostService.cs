@@ -1,20 +1,21 @@
-﻿using ChemJourney.Data.Models;
-using ChemJourney.Web.ViewModels.Post;
+﻿using ChemJourney.Web.ViewModels.Post;
 
 namespace ChemJourney.Services.Data.Interfaces
 {
-    public interface IPostService
+	public interface IPostService
     {
         Task<IEnumerable<PostAllViewModel>> GetPostsAsync();
+        Task<PostDetailsViewModel> GetPostById(int postId);
         Task<IEnumerable<PostAllViewModel>> GetPostsByCategoryAsync(string category);
 
-        Task<PostDetailsViewModel> GetPostById(int postId);
-        Task<PostFormViewModel> AddPostAsync(PostFormViewModel post);
+        Task AddPostAsync(PostFormViewModel model, string userId);
+		Task<PostFormViewModel> EditPostAsync(int postId, string newContent);
         Task DeletePostAsync(string postId);
-        Task<PostFormViewModel> EditPostAsync(int postId, string newContent);
 
-        Task<PostReplyViewModel> EdinPostReplyAsync(int postId, string newContemt);
+        Task<PostReplyViewModel> AddReplyAsync(PostReplyViewModel model);
+        Task<PostReplyViewModel> EdinPostReplyAsync(int replyId, string newContemt);
+		Task DeleteReplyAsync(string replyId);
 
-        Task AddReply(PostReply reply);
-    }
+        Task<IEnumerable<CategoryViewModel>> GetCategoriesAsync();
+	}
 }

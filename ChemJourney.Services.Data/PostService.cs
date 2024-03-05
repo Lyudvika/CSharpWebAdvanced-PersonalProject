@@ -33,25 +33,6 @@ namespace ChemJourney.Services.Data
 			return posts;
 		}
 
-		public async Task<IEnumerable<PostAllViewModel>> GetPostsByCategoryAsync(string category)
-		{
-			IEnumerable<PostAllViewModel> posts = await this.dbContext
-				.Posts
-				.Where(p => p.Category.Name == category)
-				.Select(p => new PostAllViewModel
-				{
-					Id = p.Id,
-					Title = p.Title,
-					Content = p.Content,
-					Category = p.Category.Name,
-					DateTime = p.DateTime.ToString(),
-					AuthorName = p.Writer.UserName,
-					RepliesCount = p.PostReplies.Count
-				}).ToArrayAsync();
-
-			return posts;
-		}
-
 		public async Task<PostDetailsViewModel> GetPostById(int postId)
 		{
 			var model = await dbContext
@@ -78,9 +59,38 @@ namespace ChemJourney.Services.Data
 			return model;
 		}
 
-		public Task<PostFormViewModel> AddPostAsync(PostFormViewModel post)
+		public async Task<IEnumerable<PostAllViewModel>> GetPostsByCategoryAsync(string category)
 		{
-			throw new NotImplementedException();
+			IEnumerable<PostAllViewModel> posts = await this.dbContext
+				.Posts
+				.Where(p => p.Category.Name == category)
+				.Select(p => new PostAllViewModel
+				{
+					Id = p.Id,
+					Title = p.Title,
+					Content = p.Content,
+					Category = p.Category.Name,
+					DateTime = p.DateTime.ToString(),
+					AuthorName = p.Writer.UserName,
+					RepliesCount = p.PostReplies.Count
+				}).ToArrayAsync();
+
+			return posts;
+		}
+
+		public async Task AddPostAsync(PostFormViewModel model, string userId)
+		{
+			Post post = new Post()
+			{
+				Title = model.Title,
+				Content = model.Content,
+				CategoryId = model.CategoryId,
+				DateTime = DateTime.UtcNow,
+				WriterId = Guid.Parse(userId)
+			};
+
+			await this.dbContext.Posts.AddAsync(post);
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public Task<PostFormViewModel> EditPostAsync(int postId, string newContent)
@@ -88,19 +98,36 @@ namespace ChemJourney.Services.Data
 			throw new NotImplementedException();
 		}
 
-		public Task AddReply(PostReply reply)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<PostReplyViewModel> EdinPostReplyAsync(int postId, string newContemt)
-		{
-			throw new NotImplementedException();
-		}
-
 		public Task DeletePostAsync(string postId)
 		{
 			throw new NotImplementedException();
+		}
+
+		public Task<PostReplyViewModel> AddReplyAsync(PostReplyViewModel model)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<PostReplyViewModel> EdinPostReplyAsync(int replyId, string newContemt)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task DeleteReplyAsync(string replyId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<IEnumerable<CategoryViewModel>> GetCategoriesAsync()
+		{
+			return await dbContext.Categories
+				.AsNoTracking()
+				.Select(t => new CategoryViewModel
+				{
+					Id = t.Id,
+					Name = t.Name
+				})
+				.ToListAsync();
 		}
 
 		private static IEnumerable<PostReplyViewModel> GetPostReplies(IEnumerable<PostReply> replies)
