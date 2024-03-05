@@ -1,16 +1,15 @@
 ﻿using ChemJourney.Services.Data.Interfaces;
-using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.Post;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ChemJourney.Web.Controllers
 {
-	public class PostController : Controller
+    public class PostController : Controller
     {
         private readonly IPostService postService;
 
-		public PostController(IPostService postService, ChemJourneyDbContext data)
+		public PostController(IPostService postService)
         {
             this.postService = postService;
 		}
@@ -20,6 +19,18 @@ namespace ChemJourney.Web.Controllers
             IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsAsync();
             return View(viewModel);
         }
+
+		public async Task<IActionResult> Details(int id)
+		{
+			PostDetailsViewModel viewModel = await this.postService.GetPostById(id);
+
+			if (viewModel == null)
+			{
+				return NotFound();
+			}
+
+			return View(viewModel);
+		}
 
 		public async Task<IActionResult> Create()
 		{
@@ -54,22 +65,44 @@ namespace ChemJourney.Web.Controllers
 			return RedirectToAction(nameof(All));
 		}
 
-		public async Task<IActionResult> Details(int postId)
-		{
-			PostDetailsViewModel viewModel = await this.postService.GetPostById(postId);
-
-			if (viewModel == null)
-			{
-				return NotFound();
-			}
-
-			return View(viewModel);
-		}
-
-        public async Task<IActionResult> AllByCategory(string category)
+        public async Task<IActionResult> Edit(int id)
         {
-			IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsByCategoryAsync(category);
-			return View(viewModel);
+            try
+            {
+                PostFormViewModel postModel =
+                    await this.postService.GetForEditOrDeleteByIdAsync(id);
+                postModel.Categories = await postService.GetCategoriesAsync();
+
+                return View(postModel);
+            }
+            catch (Exception)
+            {
+                return this.RedirectToAction(nameof(All));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PostFormViewModel postModel, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                postModel.Categories = await postService.GetCategoriesAsync();
+
+                return View(postModel);
+            }
+
+            try
+            {
+                await this.postService.EditPostAsync(postModel, id);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Error! Post failed editing.");
+
+                return View(postModel);
+            }
+
+			return RedirectToAction(nameof(Details), new { id });
 		}
 
 		private string GetUserId()

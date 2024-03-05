@@ -1,12 +1,15 @@
 ﻿@model IEnumerable<PostAllViewModel>
 
+<table>
+	<p>Test</p>
+</table>
 <table class="table table-bordered table-hover">
 	<tbody>
 		@foreach(var post in Model)
 		{
 			<tr>
 				<td>
-				<td class="cell" onclick="location.href='@Url.Action("Details", "Post", new { postId = post.Id })';" style="cursor: pointer;)">
+					<a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">View Details</a>
 						@post.Title
 				</td>
 				<td>

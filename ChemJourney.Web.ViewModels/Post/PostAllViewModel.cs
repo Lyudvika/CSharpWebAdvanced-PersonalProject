@@ -10,7 +10,9 @@
 
         public string Category { get; set; } = string.Empty;
 
-        public string DateTime { get; set; } = string.Empty;
+		public int CategoryId { get; set; }
+
+		public string DateTime { get; set; } = string.Empty;
 
         public string AuthorName { get; set; } = string.Empty;
 

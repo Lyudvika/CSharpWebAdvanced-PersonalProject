@@ -2,11 +2,12 @@
 using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.Post;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChemJourney.Services.Data
 {
-	public class PostService : IPostService
+    public class PostService : IPostService
     {
         private readonly ChemJourneyDbContext dbContext;
 
@@ -33,11 +34,11 @@ namespace ChemJourney.Services.Data
 			return posts;
 		}
 
-		public async Task<PostDetailsViewModel> GetPostById(int postId)
+		public async Task<PostDetailsViewModel> GetPostById(int id)
 		{
 			var model = await dbContext
 				.Posts
-				.Where(p => p.Id == postId)
+				.Where(p => p.Id == id)
 				.Include(p => p.PostReplies)
 				.AsNoTracking()
 				.Select(p => new PostDetailsViewModel()
@@ -93,27 +94,35 @@ namespace ChemJourney.Services.Data
 			await this.dbContext.SaveChangesAsync();
 		}
 
-		public Task<PostFormViewModel> EditPostAsync(int postId, string newContent)
+		public async Task<PostFormViewModel> GetForEditOrDeleteByIdAsync(int id)
 		{
-			throw new NotImplementedException();
+			Post postToEdit = await this.dbContext
+				.Posts
+				.FirstAsync(p => p.Id == id);
+
+			return new PostFormViewModel()
+			{
+				Title = postToEdit.Title,
+				Content = postToEdit.Content,
+				CategoryId = postToEdit.CategoryId,
+				AuthorId = postToEdit.WriterId.ToString()
+			};
 		}
 
-		public Task DeletePostAsync(string postId)
+		public async Task EditPostAsync(PostFormViewModel model, int id)
 		{
-			throw new NotImplementedException();
-		}
+            Post postToEdit = await this.dbContext
+                .Posts
+                .FirstAsync(p => p.Id == id);
 
-		public Task<PostReplyViewModel> AddReplyAsync(PostReplyViewModel model)
-		{
-			throw new NotImplementedException();
-		}
+            postToEdit.Title = model.Title;
+            postToEdit.Content = model.Content;
+			postToEdit.CategoryId = model.CategoryId;
 
-		public Task<PostReplyViewModel> EdinPostReplyAsync(int replyId, string newContemt)
-		{
-			throw new NotImplementedException();
-		}
+            await this.dbContext.SaveChangesAsync();
+        }
 
-		public Task DeleteReplyAsync(string replyId)
+		public Task DeletePostAsync(string id)
 		{
 			throw new NotImplementedException();
 		}
