@@ -22,12 +22,12 @@
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.CategoryId" class="form-label-add-edit"><b>Post type:</b></label>
+                <label asp-for="@Model.CategoryId" class="form-label-add-edit"><b>Post category:</b></label>
                 <select asp-for="@Model.CategoryId" class="form-control" aria-required="true">
                     <option class="default-category-select" disabled selected>select category...</option>
-                    @foreach (var type in Model.Categories)
+                    @foreach (var category in Model.Categories)
                     {
-                        <option value="@type.Id">@type.Name</option>
+                        <option value="@category.Id">@category.Name</option>
                     }
                 </select>
                 <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>

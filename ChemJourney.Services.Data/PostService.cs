@@ -2,7 +2,6 @@
 using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.Post;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChemJourney.Services.Data
@@ -20,6 +19,7 @@ namespace ChemJourney.Services.Data
 		{
 			IEnumerable<PostAllViewModel> posts = await this.dbContext
 				.Posts
+				.Where( p=> p.IsDeleted == false)
 				.Select(p => new PostAllViewModel
 				{
 					Id = p.Id,
@@ -38,7 +38,8 @@ namespace ChemJourney.Services.Data
 		{
 			var model = await dbContext
 				.Posts
-				.Where(p => p.Id == id)
+                .Where(p => p.IsDeleted == false)
+                .Where(p => p.Id == id)
 				.Include(p => p.PostReplies)
 				.AsNoTracking()
 				.Select(p => new PostDetailsViewModel()
@@ -64,7 +65,8 @@ namespace ChemJourney.Services.Data
 		{
 			IEnumerable<PostAllViewModel> posts = await this.dbContext
 				.Posts
-				.Where(p => p.Category.Name == category)
+                .Where(p => p.IsDeleted == false)
+                .Where(p => p.Category.Name == category)
 				.Select(p => new PostAllViewModel
 				{
 					Id = p.Id,
@@ -98,7 +100,8 @@ namespace ChemJourney.Services.Data
 		{
 			Post postToEdit = await this.dbContext
 				.Posts
-				.FirstAsync(p => p.Id == id);
+                .Where(p => p.IsDeleted == false)
+                .FirstAsync(p => p.Id == id);
 
 			return new PostFormViewModel()
 			{
@@ -113,6 +116,7 @@ namespace ChemJourney.Services.Data
 		{
             Post postToEdit = await this.dbContext
                 .Posts
+                .Where(p => p.IsDeleted == false)
                 .FirstAsync(p => p.Id == id);
 
             postToEdit.Title = model.Title;
@@ -122,9 +126,14 @@ namespace ChemJourney.Services.Data
             await this.dbContext.SaveChangesAsync();
         }
 
-		public Task DeletePostAsync(string id)
+		public async Task DeletePostAsync(int id)
 		{
-			throw new NotImplementedException();
+			Post post = await this.dbContext
+				.Posts
+				.FirstAsync(p => p.Id == id);
+
+			post.IsDeleted = true;
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task<IEnumerable<CategoryViewModel>> GetCategoriesAsync()

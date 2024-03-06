@@ -2,39 +2,68 @@
 
 <link rel="stylesheet" href="~/css/ForumCss/forumDetails.css" asp-append-version="true" />
 
-<div class="post-title">
-    <div class="card w-40">
-            <h2 class="text-center">@Model.Title</h2>
+<div class="main-body">
+
+    <div class="post-title">
+        <h2>@Model.Title</h2>
     </div>
-</div>
 
-
-<div>
-    <p>Answer @Model.PostReplies.Count() Delete</p>
-</div>
-
-<div class="row">
-    <div class="card w-100">
-        <div class="card-body">
-            <div class="post-user-category">
-                <p class="text-paragraph">@Model.AuthorName<strong><font color="#8B008B">@Model.Category</font></strong></p>
-            </div>
-            <hr />
-            <div class="content">
-                <p class="mb-0">@Model.Content</p>
-            </div>
-            <div class="date-created">
-                <p class="mb-0">@Model.PostCreated</p>
-            </div>
-            
+    <div class="elements">
+        <div class="left-elements">
+            <p class="reply-element">Reply</p>
+            <p class="reply-count-element">@Model.PostReplies.Count()</p>
         </div>
 
-        @if (User.Identity.Name == Model.AuthorName)
-        {
-            <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
-        }
+        <div class="right-elements">
+            @if (User.Identity.Name == Model.AuthorName)
+            {
+                <p>
+                    <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Id">
+                            <input type="submit" value="Delete" class="delete-element" onclick="return confirm('Are you sure you want to delete post: @Model.Title?')" />
+                    </form>
+                    
+                </p>
 
+                <p class="edit-element">
+                    <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id" class="edit-customize">Edit</a>
+                        
+                </p>
+            }
+        </div>
     </div>
+
+    <div class="information-body">
+        <div class="card w-100">
+            <div class="card-body">
+                <div class="post-user-category">
+
+                    <p class="author-name">
+                        @Model.AuthorName
+                    </p>
+
+                    <p class="category">
+                        <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="@Model.Category">@Model.Category</a>
+                    </p>
+
+                </div>
+
+                <hr/>
+
+                <div class="content-date">
+
+                    <div class="content">
+                        <p class="content">@Model.Content</p>
+                    </div>
+
+                    <div class="date-created">
+                        <p class="date-created">@Model.PostCreated</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @section Scripts { 

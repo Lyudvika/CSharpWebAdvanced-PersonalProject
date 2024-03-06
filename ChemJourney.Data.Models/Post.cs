@@ -47,6 +47,10 @@ namespace ChemJourney.Data.Models
         [Comment("User who wrote the post.")]
         public ApplicationUser Writer { get; set; } = null!;
 
+        [Required]
+        [Comment("To check if post is deleted.")]
+        public bool IsDeleted { get; set; }
+
         [Comment("Replies given to the post.")]
         public virtual ICollection<PostReply> PostReplies { get; set; }
     }

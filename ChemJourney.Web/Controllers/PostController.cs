@@ -20,6 +20,12 @@ namespace ChemJourney.Web.Controllers
             return View(viewModel);
         }
 
+        public async Task<IActionResult> AllByCategory(string category)
+        {
+			IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsByCategoryAsync(category);
+			return View(viewModel);
+		}
+
 		public async Task<IActionResult> Details(int id)
 		{
 			PostDetailsViewModel viewModel = await this.postService.GetPostById(id);
@@ -104,6 +110,20 @@ namespace ChemJourney.Web.Controllers
 
 			return RedirectToAction(nameof(Details), new { id });
 		}
+
+		public async Task<IActionResult> Delete(int id)
+		{
+            try
+            {
+                await this.postService.DeletePostAsync(id);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return this.RedirectToAction(nameof(All));
+        }
 
 		private string GetUserId()
 		{
