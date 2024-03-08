@@ -45,10 +45,12 @@ namespace ChemJourney.Web.Controllers
 
 		public async Task<IActionResult> Create()
 		{
-			var model = new PostFormViewModel();
-			model.Categories = await postService.GetCategoriesAsync();
+            var model = new PostFormViewModel
+            {
+                Categories = await postService.GetCategoriesAsync()
+            };
 
-			return View(model);
+            return View(model);
 		}
 
 		[HttpPost]

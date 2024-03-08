@@ -25,7 +25,6 @@
     <ProjectReference Include="..\ChemJourney.Data.Models\ChemJourney.Data.Models.csproj" />
     <ProjectReference Include="..\ChemJourney.Data\ChemJourney.Data.csproj" />
     <ProjectReference Include="..\ChemJourney.Services.Data\ChemJourney.Services.Data.csproj" />
-    <ProjectReference Include="..\ChemJourney.Web.Infrastrucute\ChemJourney.Web.Infrastrucute.csproj" />
     <ProjectReference Include="..\ChemJourney.Web.ViewModels\ChemJourney.Web.ViewModels.csproj" />
   </ItemGroup>
 

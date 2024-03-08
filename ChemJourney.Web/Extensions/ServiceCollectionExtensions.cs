@@ -1,14 +1,30 @@
 ﻿using ChemJourney.Data.Models;
 using ChemJourney.Web.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static void AddApplicationServices(this IServiceCollection services, Type serviceType)
         {
-            return services;
+            Assembly? serviceAssembly = Assembly.GetAssembly(serviceType) ?? 
+                throw new InvalidOperationException("Invalid service type provided.");
+
+            Type[] serviceTypes = serviceAssembly
+                .GetTypes()
+                .Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
+                .ToArray();
+
+            foreach (Type implementationType in serviceTypes)
+            {
+                Type? interfaceType = implementationType
+                    .GetInterface($"I{implementationType.Name}") ?? 
+                    throw new InvalidOperationException($"No interface is provided for the service with name: {implementationType.Name}");
+
+                services.AddScoped(interfaceType, implementationType);
+            }
         }
 
         public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration)

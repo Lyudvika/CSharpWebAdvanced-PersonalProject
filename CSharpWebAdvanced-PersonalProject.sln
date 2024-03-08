@@ -19,9 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChemJourney.Web.ViewModels"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BF56CF7F-7EB0-4247-B56F-6D3029C2E71B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChemJourney.Services.Data", "ChemJourney.Services.Data\ChemJourney.Services.Data.csproj", "{011A07D0-F870-4E04-AC9C-2A821E13B42C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChemJourney.Web.Infrastrucute", "ChemJourney.Web.Infrastrucute\ChemJourney.Web.Infrastrucute.csproj", "{BE5284BC-5003-4118-8257-25CB71B862F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChemJourney.Services.Data", "ChemJourney.Services.Data\ChemJourney.Services.Data.csproj", "{011A07D0-F870-4E04-AC9C-2A821E13B42C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +51,6 @@ Global
 		{011A07D0-F870-4E04-AC9C-2A821E13B42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{011A07D0-F870-4E04-AC9C-2A821E13B42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{011A07D0-F870-4E04-AC9C-2A821E13B42C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE5284BC-5003-4118-8257-25CB71B862F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE5284BC-5003-4118-8257-25CB71B862F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE5284BC-5003-4118-8257-25CB71B862F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE5284BC-5003-4118-8257-25CB71B862F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,7 +61,6 @@ Global
 		{126B5C71-22FB-491D-8356-68390CFAD5DD} = {E4EC5CE2-22D3-4479-8836-9C52E90A603B}
 		{A643B033-557E-4C8F-9C24-EFA6ACE0F373} = {A6CC1505-8225-4EAE-BF2E-F07E3675CAB1}
 		{011A07D0-F870-4E04-AC9C-2A821E13B42C} = {BF56CF7F-7EB0-4247-B56F-6D3029C2E71B}
-		{BE5284BC-5003-4118-8257-25CB71B862F7} = {A6CC1505-8225-4EAE-BF2E-F07E3675CAB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C787A45-F767-4630-BBC1-B633144659B5}

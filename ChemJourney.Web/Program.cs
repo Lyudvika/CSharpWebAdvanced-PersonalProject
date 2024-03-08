@@ -1,8 +1,4 @@
 using ChemJourney.Services.Data.Interfaces;
-using ChemJourney.Web.Infrastrucute.Extensions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using ChemJourney.Web.Data;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplicationServices(typeof(IElementService));
 builder.Services.AddApplicationServices(typeof(IPostService));
+builder.Services.AddApplicationServices(typeof(IReplyService));
 
 WebApplication app = builder.Build();
 
