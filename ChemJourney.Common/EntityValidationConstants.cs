@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace ChemJourney.Common
+﻿namespace ChemJourney.Common
 {
     public static class EntityValidationConstants
     {
@@ -30,13 +28,13 @@ namespace ChemJourney.Common
             public const int TitleMaxLength = 50;
             public const int TitleMinLength = 5;
 
-            public const int ContentMaxLength = 300;
+            public const int ContentMaxLength = 500;
             public const int ContentMinLength = 20;
         }
 
         public static class PostReply
         {
-            public const int ContentMaxLength = 150;
+            public const int ContentMaxLength = 500;
             public const int ContentMinLength = 20;
         }
 

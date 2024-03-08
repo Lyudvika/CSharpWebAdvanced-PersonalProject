@@ -34,6 +34,8 @@
             }
 
             services.AddScoped<IElementService, ElementService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IReplyService, ReplyService>();
         }
     }
 }

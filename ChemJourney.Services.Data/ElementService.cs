@@ -31,7 +31,7 @@ namespace ChemJourney.Services.Data
 
         public async Task<ElementDetailsViewModel> GetElementByAtomicNumber(int atomicNumber)
         {
-            ElementDetailsViewModel? element = await this.dbContext
+            ElementDetailsViewModel? element = await dbContext
                 .Elements
                 .Where(e => e.Id == atomicNumber)
                 .Select(e => new ElementDetailsViewModel

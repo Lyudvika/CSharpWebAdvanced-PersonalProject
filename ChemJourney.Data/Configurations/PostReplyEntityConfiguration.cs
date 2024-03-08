@@ -8,6 +8,15 @@ namespace ChemJourney.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<PostReply> builder)
         {
+            builder.HasOne(pr => pr.Post)
+                .WithMany(p => p.PostReplies)
+                .HasForeignKey(pr => pr.PostId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(pr => pr.Author)
+                .WithMany()
+                .HasForeignKey(pr => pr.AuthorId)
+                .IsRequired();
         }
     }
 }

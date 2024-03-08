@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemJourney.Data.Migrations
 {
     [DbContext(typeof(ChemJourneyDbContext))]
-    [Migration("20240303231630_Initial")]
-    partial class Initial
+    [Migration("20240308155521_seedingPeriodicTable")]
+    partial class seedingPeriodicTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -49,6 +49,9 @@ namespace ChemJourney.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTime>("MemberSince")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -1662,35 +1665,39 @@ namespace ChemJourney.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Id of the user who wrote the post.");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasComment("Category ID of the post.");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
                         .HasComment("Content of the post.");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2")
                         .HasComment("Time when the post has been posted.");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("To check if post is deleted.");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Title of the post.");
-
-                    b.Property<Guid>("WriterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Id of the user who wrote the post.");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("AuthorId");
 
-                    b.HasIndex("WriterId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Posts");
 
@@ -1706,6 +1713,10 @@ namespace ChemJourney.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("User Id of the person who gave the reply.");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1716,18 +1727,19 @@ namespace ChemJourney.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("Time when the reply is given.");
 
-                    b.Property<int?>("PostId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("To check if reply is deleted.");
 
-                    b.Property<Guid>("ReplierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("User Id of the person who gave the reply.");
+                    b.Property<int>("PostId")
+                        .HasColumnType("int")
+                        .HasComment("Post ID to which the reply is associated.");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("AuthorId");
 
-                    b.HasIndex("ReplierId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("PostReplies");
 
@@ -1882,36 +1894,40 @@ namespace ChemJourney.Data.Migrations
 
             modelBuilder.Entity("ChemJourney.Data.Models.Post", b =>
                 {
+                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ChemJourney.Data.Models.Category", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Writer")
-                        .WithMany()
-                        .HasForeignKey("WriterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Author");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Writer");
                 });
 
             modelBuilder.Entity("ChemJourney.Data.Models.PostReply", b =>
                 {
-                    b.HasOne("ChemJourney.Data.Models.Post", null)
-                        .WithMany("PostReplies")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Replier")
+                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Author")
                         .WithMany()
-                        .HasForeignKey("ReplierId")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Replier");
+                    b.HasOne("ChemJourney.Data.Models.Post", "Post")
+                        .WithMany("PostReplies")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

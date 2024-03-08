@@ -16,19 +16,19 @@ namespace ChemJourney.Web.Controllers
 
         public async Task<IActionResult> All()
         {
-            IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsAsync();
+            IEnumerable<PostAllViewModel> viewModel = await postService.GetPostsAsync();
             return View(viewModel);
         }
 
         public async Task<IActionResult> AllByCategory(string category)
         {
-			IEnumerable<PostAllViewModel> viewModel = await this.postService.GetPostsByCategoryAsync(category);
+			IEnumerable<PostAllViewModel> viewModel = await postService.GetPostsByCategoryAsync(category);
 			return View(viewModel);
 		}
 
 		public async Task<IActionResult> Details(int id)
 		{
-			PostDetailsViewModel viewModel = await this.postService.GetPostById(id);
+			PostDetailsViewModel viewModel = await postService.GetPostById(id);
 
 			if (viewModel == null)
 			{
@@ -83,7 +83,7 @@ namespace ChemJourney.Web.Controllers
             }
             catch (Exception)
             {
-                return this.RedirectToAction(nameof(All));
+                return RedirectToAction(nameof(All));
             }
         }
 
@@ -99,7 +99,7 @@ namespace ChemJourney.Web.Controllers
 
             try
             {
-                await this.postService.EditPostAsync(postModel, id);
+                await postService.EditPostAsync(postModel, id);
             }
             catch (Exception)
             {
@@ -115,14 +115,14 @@ namespace ChemJourney.Web.Controllers
 		{
             try
             {
-                await this.postService.DeletePostAsync(id);
+                await postService.DeletePostAsync(id);
             }
             catch (Exception)
             {
 
             }
 
-            return this.RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(All));
         }
 
 		private string GetUserId()

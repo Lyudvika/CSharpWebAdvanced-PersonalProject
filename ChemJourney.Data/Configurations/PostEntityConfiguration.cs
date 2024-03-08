@@ -13,9 +13,9 @@ namespace ChemJourney.Data.Configurations
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(p => p.Writer)
+            builder.HasOne(p => p.Author)
                 .WithMany()
-                .HasForeignKey(p => p.WriterId)
+                .HasForeignKey(p => p.AuthorId)
                 .IsRequired();
         }
     }

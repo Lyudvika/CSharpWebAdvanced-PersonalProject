@@ -41,11 +41,11 @@ namespace ChemJourney.Data.Models
 
         [Required]
         [Comment("Id of the user who wrote the post.")]
-        public Guid WriterId {  get; set; }
+        public Guid AuthorId {  get; set; }
 
         [Required]
         [Comment("User who wrote the post.")]
-        public ApplicationUser Writer { get; set; } = null!;
+        public ApplicationUser Author { get; set; } = null!;
 
         [Required]
         [Comment("To check if post is deleted.")]

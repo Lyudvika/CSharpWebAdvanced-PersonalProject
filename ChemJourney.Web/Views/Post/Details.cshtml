@@ -10,7 +10,9 @@
 
     <div class="elements">
         <div class="left-elements">
-            <p class="reply-element">Reply</p>
+            <p class="reply-element">
+                <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="reply-customize">Reply</a>
+            </p>
             <p class="reply-count-element">@Model.PostReplies.Count()</p>
         </div>
 
@@ -62,6 +64,37 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="reply-body">
+        @foreach (var reply in Model.PostReplies)
+        {
+            <p>
+                @reply.AuthorName
+            </p>
+            <p>
+                @reply.Content
+            </p>
+            <p>
+                @reply.ReplyCreated
+            </p>
+            @if (User.Identity.Name == reply.AuthorName)
+            {
+            
+            <p class="edit-element">
+                <a asp-controller="Reply" asp-action="Edit" asp-route-id="@reply.Id" class="edit-customize">Edit</a>
+
+            </p>
+
+                <p>
+                    <form asp-controller="Reply" asp-action="Delete" asp-route-id="@reply.Id">
+                        <input type="submit" value="Delete" class="delete-element" onclick="return confirm('Are you sure you want to delete your reply?')" />
+                    </form>
+
+                </p>
+            }
+        }
+
     </div>
 
 </div>

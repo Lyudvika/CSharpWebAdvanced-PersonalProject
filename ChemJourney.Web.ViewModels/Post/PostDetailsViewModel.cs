@@ -1,10 +1,12 @@
-﻿namespace ChemJourney.Web.ViewModels.Post
+﻿using ChemJourney.Web.ViewModels.Reply;
+
+namespace ChemJourney.Web.ViewModels.Post
 {
-	public class PostDetailsViewModel
+    public class PostDetailsViewModel
     {
         public PostDetailsViewModel()
         {
-            PostReplies = new HashSet<PostReplyViewModel>();
+            PostReplies = new HashSet<PostReplyFormViewModel>();
         }
 
         public int Id { get; set; }
@@ -15,6 +17,6 @@
 		public string AuthorName { get; set; } = string.Empty;
 		public DateTime PostCreated { get; set; }
 
-		public IEnumerable<PostReplyViewModel> PostReplies { get; set; }
+		public IEnumerable<PostReplyFormViewModel> PostReplies { get; set; }
 	}
 }

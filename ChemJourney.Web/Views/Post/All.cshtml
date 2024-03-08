@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<PostAllViewModel>
 
 <table>
-	<p>Test</p>
 </table>
 <table class="table table-bordered table-hover">
 	<tbody>
@@ -9,7 +8,7 @@
 		{
 			<tr>
 				<td>
-					<a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">View Details</a>
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">@post.Title</a>
 						@post.Title
 				</td>
 				<td>
@@ -29,3 +28,81 @@
 		}
 	</tbody>
 </table>
+
+<head>
+    <link rel="stylesheet" href="~/css/ForumCss/forumAll.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="search-bar">
+        <input class="search" type="text" placeholder="Search">
+    </div>
+
+    <div class="sidebar">
+        <div class="new-post-button">
+            <button class="post-button">
+                New Post
+            </button>
+        </div>
+        <div class="categories-list">
+            <li type="circle">
+                Organic
+            </li>
+            <li type="circle">
+                Inorganic
+            </li>
+            <li type="circle">
+                Biochemistry
+            </li>
+            <li type="circle">
+                Biochemistry
+            </li>
+            <li type="circle">
+                Biochemistry
+            </li>
+        </div>
+    </div>
+
+    <div class="post-outline">
+        @foreach (var post in Model)
+        {
+            <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">
+                <div class="post-body">
+                    <div class="post-owner">
+                        <p>
+                            @post.AuthorName
+                        </p>
+                    </div>
+                    <div class="post-information">
+                        <div class="post-title">
+                            <p>
+                                @post.Title
+                            </p>
+                        </div>
+                        <div class="post-category">
+                            <p>
+                                @post.Category
+                            </p>
+                        </div>
+                        <div class="post-text">
+                            <p>
+                                @post.Content
+                            </p>
+                        </div>
+                    </div>
+                    <div class="post-details">
+                        <div class="post-date">
+                            <p>
+                                @post.DateTime
+                            </p>
+                        </div>
+                        <div class="post-replies">
+                            <p>
+                                @post.RepliesCount
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</body>

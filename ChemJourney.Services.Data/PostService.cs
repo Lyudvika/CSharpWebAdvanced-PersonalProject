@@ -2,6 +2,7 @@
 using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.Post;
+using ChemJourney.Web.ViewModels.Reply;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChemJourney.Services.Data
@@ -27,7 +28,7 @@ namespace ChemJourney.Services.Data
 					Content = p.Content,
 					Category = p.Category.Name,
 					DateTime = p.DateTime.ToString(),
-					AuthorName = p.Writer.UserName,
+					AuthorName = p.Author.UserName,
 					RepliesCount = p.PostReplies.Count
 				}).ToArrayAsync();
 
@@ -38,8 +39,8 @@ namespace ChemJourney.Services.Data
 		{
 			var model = await dbContext
 				.Posts
-                .Where(p => p.IsDeleted == false)
-                .Where(p => p.Id == id)
+				.Where(p => p.IsDeleted == false)
+				.Where(p => p.Id == id)
 				.Include(p => p.PostReplies)
 				.AsNoTracking()
 				.Select(p => new PostDetailsViewModel()
@@ -48,17 +49,18 @@ namespace ChemJourney.Services.Data
 					Title = p.Title,
 					Content = p.Content,
 					Category = p.Category.Name,
-					AuthorId = p.WriterId.ToString(),
-					AuthorName = p.Writer.UserName,
+					AuthorId = p.AuthorId.ToString(),
+					AuthorName = p.Author.UserName,
 					PostCreated = p.DateTime,
-					PostReplies = GetPostReplies(p.PostReplies)
 				})
 				.FirstOrDefaultAsync();
 
 			if (model == null)
 				throw new InvalidOperationException("Post not found.");
 
-			return model;
+            model.PostReplies = await GetPostReplies(id);
+
+            return model;
 		}
 
 		public async Task<IEnumerable<PostAllViewModel>> GetPostsByCategoryAsync(string category)
@@ -74,7 +76,7 @@ namespace ChemJourney.Services.Data
 					Content = p.Content,
 					Category = p.Category.Name,
 					DateTime = p.DateTime.ToString(),
-					AuthorName = p.Writer.UserName,
+					AuthorName = p.Author.UserName,
 					RepliesCount = p.PostReplies.Count
 				}).ToArrayAsync();
 
@@ -89,7 +91,7 @@ namespace ChemJourney.Services.Data
 				Content = model.Content,
 				CategoryId = model.CategoryId,
 				DateTime = DateTime.UtcNow,
-				WriterId = Guid.Parse(userId)
+				AuthorId = Guid.Parse(userId)
 			};
 
 			await this.dbContext.Posts.AddAsync(post);
@@ -108,7 +110,7 @@ namespace ChemJourney.Services.Data
 				Title = postToEdit.Title,
 				Content = postToEdit.Content,
 				CategoryId = postToEdit.CategoryId,
-				AuthorId = postToEdit.WriterId.ToString()
+				AuthorId = postToEdit.AuthorId.ToString()
 			};
 		}
 
@@ -148,18 +150,22 @@ namespace ChemJourney.Services.Data
 				.ToListAsync();
 		}
 
-		private static IEnumerable<PostReplyViewModel> GetPostReplies(IEnumerable<PostReply> replies)
+		private async Task<IEnumerable<PostReplyFormViewModel>> GetPostReplies(int id)
 		{
-			return replies
-				.Select(r => new PostReplyViewModel()
+            return await dbContext
+                .PostReplies
+                .Where(r => r.IsDeleted == false)
+                .Where(r => r.PostId == id)
+                .AsNoTracking()
+                .Select(r => new PostReplyFormViewModel()
 				{
 					Id = r.Id,
 					Content = r.Content,
-					AuthorId = r.ReplierId.ToString(),
-					AuthorName = r.Replier.UserName,
+					AuthorId = r.AuthorId.ToString(),
+					AuthorName = r.Author.UserName,
 					ReplyCreated = r.DateTime,
 				})
-				.ToArray();
+				.ToListAsync();
 		}
 	}
 }

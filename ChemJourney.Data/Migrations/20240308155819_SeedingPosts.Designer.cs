@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemJourney.Data.Migrations
 {
     [DbContext(typeof(ChemJourneyDbContext))]
-    [Migration("20240305200045_AddIsDeletedColumnToPostTable")]
-    partial class AddIsDeletedColumnToPostTable
+    [Migration("20240308155819_SeedingPosts")]
+    partial class SeedingPosts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1665,6 +1665,10 @@ namespace ChemJourney.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Id of the user who wrote the post.");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasComment("Category ID of the post.");
@@ -1689,15 +1693,11 @@ namespace ChemJourney.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Title of the post.");
 
-                    b.Property<Guid>("WriterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Id of the user who wrote the post.");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("AuthorId");
 
-                    b.HasIndex("WriterId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Posts");
 
@@ -1707,62 +1707,62 @@ namespace ChemJourney.Data.Migrations
                         new
                         {
                             Id = 1,
+                            AuthorId = new Guid("2d42ee05-aabf-44fa-91c8-d4f7cd258e44"),
                             CategoryId = 1,
                             Content = "Can someone explain the concept of resonance in organic chemistry and provide examples to illustrate its significance in the stability of molecules?",
                             DateTime = new DateTime(2024, 1, 5, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Title = "Decoding Organic Resonance",
-                            WriterId = new Guid("0c732953-0a4f-400c-b82a-142a89e37de6")
+                            Title = "Decoding Organic Resonance"
                         },
                         new
                         {
                             Id = 2,
+                            AuthorId = new Guid("fdeb91a2-491f-40b6-83f6-b0ff231f9253"),
                             CategoryId = 2,
                             Content = "I'm struggling to grasp the concept of Gibbs free energy. How does it relate to spontaneity in chemical reactions, and what are the key factors that affect it?",
                             DateTime = new DateTime(2023, 3, 5, 15, 30, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Title = "Demystifying Gibbs Free Energy",
-                            WriterId = new Guid("0c732953-0a4f-400c-b82a-142a89e37de6")
+                            Title = "Demystifying Gibbs Free Energy"
                         },
                         new
                         {
                             Id = 3,
+                            AuthorId = new Guid("fdeb91a2-491f-40b6-83f6-b0ff231f9253"),
                             CategoryId = 3,
                             Content = "What are the main differences between coordination compounds and complex ions? How do ligands influence the properties of coordination compounds?",
                             DateTime = new DateTime(2024, 2, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Title = "Unraveling Coordination Compounds",
-                            WriterId = new Guid("0c732953-0a4f-400c-b82a-142a89e37de6")
+                            Title = "Unraveling Coordination Compounds"
                         },
                         new
                         {
                             Id = 4,
+                            AuthorId = new Guid("8a0f20bd-0612-4f85-98c1-45bac15088eb"),
                             CategoryId = 4,
                             Content = "I need help understanding the principles behind chromatography techniques. How does high-performance liquid chromatography (HPLC) differ from gas chromatography (GC), and in what situations would one be preferred over the other?",
                             DateTime = new DateTime(2023, 3, 5, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Title = "HPLC vs. GC: Need Guidance",
-                            WriterId = new Guid("466ef5f1-5313-4a18-a5ab-702f27231479")
+                            Title = "HPLC vs. GC: Need Guidance"
                         },
                         new
                         {
                             Id = 5,
+                            AuthorId = new Guid("8a0f20bd-0612-4f85-98c1-45bac15088eb"),
                             CategoryId = 5,
                             Content = "Could someone explain the role of enzymes in biochemical reactions? How do factors like pH and temperature affect enzyme activity, and are there any real-world applications of this knowledge?",
                             DateTime = new DateTime(2024, 1, 21, 18, 35, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Title = "Cracking the Enzyme Code",
-                            WriterId = new Guid("fea4df6c-fe3f-4947-b0de-06717b262e1e")
+                            Title = "Cracking the Enzyme Code"
                         },
                         new
                         {
                             Id = 6,
+                            AuthorId = new Guid("8a0f20bd-0612-4f85-98c1-45bac15088eb"),
                             CategoryId = 6,
                             Content = "I recently came across the term 'nanotechnology' in the context of chemistry. Can someone shed light on how nanotechnology intersects with chemistry, and what are some notable applications or advancements in this interdisciplinary field?",
                             DateTime = new DateTime(2024, 1, 1, 8, 30, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Title = "Nanotechnology",
-                            WriterId = new Guid("466ef5f1-5313-4a18-a5ab-702f27231479")
+                            Title = "Nanotechnology"
                         });
                 });
 
@@ -1775,6 +1775,10 @@ namespace ChemJourney.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("User Id of the person who gave the reply.");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1785,18 +1789,19 @@ namespace ChemJourney.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("Time when the reply is given.");
 
-                    b.Property<int?>("PostId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("To check if reply is deleted.");
 
-                    b.Property<Guid>("ReplierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("User Id of the person who gave the reply.");
+                    b.Property<int>("PostId")
+                        .HasColumnType("int")
+                        .HasComment("Post ID to which the reply is associated.");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("AuthorId");
 
-                    b.HasIndex("ReplierId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("PostReplies");
 
@@ -1951,36 +1956,40 @@ namespace ChemJourney.Data.Migrations
 
             modelBuilder.Entity("ChemJourney.Data.Models.Post", b =>
                 {
+                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ChemJourney.Data.Models.Category", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Writer")
-                        .WithMany()
-                        .HasForeignKey("WriterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Author");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Writer");
                 });
 
             modelBuilder.Entity("ChemJourney.Data.Models.PostReply", b =>
                 {
-                    b.HasOne("ChemJourney.Data.Models.Post", null)
-                        .WithMany("PostReplies")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Replier")
+                    b.HasOne("ChemJourney.Data.Models.ApplicationUser", "Author")
                         .WithMany()
-                        .HasForeignKey("ReplierId")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Replier");
+                    b.HasOne("ChemJourney.Data.Models.Post", "Post")
+                        .WithMany("PostReplies")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

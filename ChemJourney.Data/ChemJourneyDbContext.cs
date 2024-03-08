@@ -2,7 +2,8 @@
 {
 	using ChemJourney.Data.Configurations;
 	using ChemJourney.Data.Models;
-	using Microsoft.AspNetCore.Identity;
+    using ChemJourney.Data.Seed;
+    using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
 
@@ -30,8 +31,10 @@
             builder.ApplyConfiguration(new SeedElementsEntityConfiguration());
 
             builder.ApplyConfiguration(new PostEntityConfiguration());
+            builder.ApplyConfiguration(new PostReplyEntityConfiguration());
             builder.ApplyConfiguration(new CategoryEntityConfiguration());
             builder.ApplyConfiguration(new SeedPostsEntityConfiguration());
+            builder.ApplyConfiguration(new SeedPostRepliesEntityConfiguration());
 
             base.OnModelCreating(builder);
         }
