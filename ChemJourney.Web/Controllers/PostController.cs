@@ -1,4 +1,5 @@
 ﻿using ChemJourney.Services.Data.Interfaces;
+using ChemJourney.Web.Extensions;
 using ChemJourney.Web.ViewModels.Post;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +62,7 @@ namespace ChemJourney.Web.Controllers
 				return View(model);
 			}
 
-			var userId = GetUserId();
+			var userId = User.Id();
 
 			try
 			{
@@ -131,10 +132,5 @@ namespace ChemJourney.Web.Controllers
 
             return RedirectToAction(nameof(All));
         }
-
-		private string GetUserId()
-		{
-			return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
-		}
 	}
 }
