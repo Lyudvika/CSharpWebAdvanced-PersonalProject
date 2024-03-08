@@ -29,9 +29,9 @@ namespace ChemJourney.Services.Data
             return elements;
         }
 
-        public async Task<ElementDetailsViewModel> GetElementByAtomicNumber(int atomicNumber)
+        public async Task<ElementDetailsViewModel?> GetElementByAtomicNumber(int atomicNumber)
         {
-            ElementDetailsViewModel? element = await dbContext
+            return await dbContext
                 .Elements
                 .Where(e => e.Id == atomicNumber)
                 .Select(e => new ElementDetailsViewModel
@@ -52,8 +52,6 @@ namespace ChemJourney.Services.Data
                     }
                 })
                 .FirstOrDefaultAsync();
-
-            return element;
         }
     }
 }

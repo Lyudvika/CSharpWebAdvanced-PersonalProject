@@ -17,7 +17,7 @@
         </div>
 
         <div class="right-elements">
-            @if (User.Identity.Name == Model.AuthorName)
+            @if (User?.Identity?.Name == Model.AuthorName)
             {
                 <p>
                     <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Id">
@@ -78,7 +78,7 @@
             <p>
                 @reply.ReplyCreated
             </p>
-            @if (User.Identity.Name == reply.AuthorName)
+            @if (User?.Identity?.Name == reply.AuthorName)
             {
             
             <p class="edit-element">

@@ -6,6 +6,6 @@ namespace ChemJourney.Services.Data.Interfaces
     {
         Task<IEnumerable<ElementViewModel>> GetElementsAsync();
 
-        Task<ElementDetailsViewModel> GetElementByAtomicNumber(int atomicNumber);
+        Task<ElementDetailsViewModel?> GetElementByAtomicNumber(int atomicNumber);
     }
 }

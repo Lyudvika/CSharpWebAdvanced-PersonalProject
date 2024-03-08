@@ -1,10 +1,12 @@
 ﻿using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.ViewModels.Reply;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ChemJourney.Web.Controllers
 {
+    [Authorize]
     public class ReplyController : Controller
     {
         private readonly IReplyService replyService;

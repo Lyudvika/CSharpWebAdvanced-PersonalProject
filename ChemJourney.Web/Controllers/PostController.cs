@@ -1,10 +1,12 @@
 ﻿using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.ViewModels.Post;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ChemJourney.Web.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         private readonly IPostService postService;
@@ -14,18 +16,21 @@ namespace ChemJourney.Web.Controllers
             this.postService = postService;
 		}
 
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             IEnumerable<PostAllViewModel> viewModel = await postService.GetPostsAsync();
             return View(viewModel);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> AllByCategory(string category)
         {
 			IEnumerable<PostAllViewModel> viewModel = await postService.GetPostsByCategoryAsync(category);
 			return View(viewModel);
 		}
 
+        [AllowAnonymous]
 		public async Task<IActionResult> Details(int id)
 		{
 			PostDetailsViewModel viewModel = await postService.GetPostById(id);
