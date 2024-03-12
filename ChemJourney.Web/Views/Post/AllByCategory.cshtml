@@ -1,23 +1,78 @@
 ﻿@model IEnumerable<PostAllViewModel>
 
-<table class="table table-bordered table-hover">
-	<tbody>
-		@foreach (var post in Model)
-		{
-			<tr>
-				<td>
-						@post.Title
-				</td>
-				<td>
-						@post.AuthorName
-				</td>
-				<td>
-						@post.DateTime
-				</td>
-				<td>
-						@post.RepliesCount
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+<head>
+    <link rel="stylesheet" href="~/css/ForumCss/forumAll.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="search-bar">
+        <input class="search" type="text" placeholder="Search">
+    </div>
+
+    <div class="sidebar">
+        <div class="new-post-button">
+                <a asp-controller="Post" asp-action="Create" class="post-button">New Post</a>
+        </div>
+        <div class="categories-list">
+            <p class="category">
+                <a asp-controller="Post" asp-action="All" class="curr-category">> All Posts</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Organic Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Physical Chemistry" class="curr-category">> Physical Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Analytical Chemistry" class="curr-category">> Analytical Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Inorganic Chemistry" class="curr-category">> Inorganic Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Biochemistry" class="curr-category">> Biochemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Undefined" class="curr-category">> Undefined</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="post-outline">
+        @foreach (var post in Model)
+        {
+            <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">
+                <div class="post-body">
+                    <div class="post-information">
+                        <div class="post-title">
+                            <p>
+                                @post.Title
+                            </p>
+                        </div>
+                        <div class="post-category">
+                            <p>
+                                @post.Category
+                            </p>
+                        </div>
+                        <div class="post-text">
+                            <p>
+                                @post.Content
+                            </p>
+                        </div>
+                    </div>
+                    <div class="post-details">
+                        <div class="post-date">
+                            <p>
+                                @post.PostCreated
+                            </p>
+                        </div>
+                        <div class="post-replies">
+                            <p>
+                                @post.RepliesCount &#128172
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</body>

@@ -28,7 +28,7 @@ namespace ChemJourney.Services.Data
 					Title = p.Title,
 					Content = p.Content,
 					Category = p.Category.Name,
-					DateTime = p.DateTime.ToString(DateFormat),
+                    PostCreated = p.DateTime.ToString(DateFormat),
 					AuthorName = p.Author.UserName,
 					RepliesCount = p.PostReplies.Count
 				})
@@ -53,7 +53,7 @@ namespace ChemJourney.Services.Data
 					Category = p.Category.Name,
 					AuthorId = p.AuthorId.ToString(),
 					AuthorName = p.Author.UserName,
-					PostCreated = p.DateTime,
+					PostCreated = p.DateTime.ToString(DateFormat),
 				})
 				.FirstOrDefaultAsync();
 
@@ -77,7 +77,7 @@ namespace ChemJourney.Services.Data
 					Title = p.Title,
 					Content = p.Content,
 					Category = p.Category.Name,
-					DateTime = p.DateTime.ToString(),
+                    PostCreated = p.DateTime.ToString(DateFormat),
 					AuthorName = p.Author.UserName,
 					RepliesCount = p.PostReplies.Count
 				}).ToArrayAsync();

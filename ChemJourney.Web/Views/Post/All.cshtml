@@ -14,22 +14,25 @@
         </div>
         <div class="categories-list">
             <p class="category">
+                <a asp-controller="Post" asp-action="All" class="curr-category">> All Posts</a>
+            </p>
+            <p class="category">
                 <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Organic Chemistry</a>
             </p>
             <p class="category">
-                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Physical Chemistry</a>
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Physical Chemistry" class="curr-category">> Physical Chemistry</a>
             </p>
             <p class="category">
-                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Analytical Chemistry</a>
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Analytical Chemistry" class="curr-category">> Analytical Chemistry</a>
             </p>
             <p class="category">
-                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Inorganic Chemistry</a>
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Inorganic Chemistry" class="curr-category">> Inorganic Chemistry</a>
             </p>
             <p class="category">
-                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Biochemistry</a>
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Biochemistry" class="curr-category">> Biochemistry</a>
             </p>
             <p class="category">
-                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Undefined</a>
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Undefined" class="curr-category">> Undefined</a>
             </p>
         </div>
     </div>
@@ -59,7 +62,7 @@
                     <div class="post-details">
                         <div class="post-date">
                             <p>
-                                @post.DateTime
+                                @post.PostCreated
                             </p>
                         </div>
                         <div class="post-replies">

@@ -15,7 +15,7 @@ namespace ChemJourney.Web.ViewModels.Post
 		public string Category { get; set; } = string.Empty;
 		public string AuthorId { get; set; } = string.Empty;
 		public string AuthorName { get; set; } = string.Empty;
-		public DateTime PostCreated { get; set; }
+		public string PostCreated { get; set; } = string.Empty;
 
 		public IEnumerable<PostReplyFormViewModel> PostReplies { get; set; }
 	}

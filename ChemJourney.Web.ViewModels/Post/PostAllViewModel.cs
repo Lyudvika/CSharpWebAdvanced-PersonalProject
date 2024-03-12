@@ -12,7 +12,7 @@
 
 		public int CategoryId { get; set; }
 
-		public string DateTime { get; set; } = string.Empty;
+		public string PostCreated { get; set; } = string.Empty;
 
         public string AuthorName { get; set; } = string.Empty;
 
