@@ -4,11 +4,37 @@
     width: 60%;
     margin-left: 20%;
     width: 60%;
+    padding-top: 80px;
 }
 
 h2 {
     margin-top: 4px;
     font-size: 25px;
+    
+}
+
+hr {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.reply-customize {
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #535C91;
+    font-weight: bold;
+    color: #DCD6F7;
+    padding: 10px 20px 10px 20px;
+    transition: background-color 1s;
+    transition: color 0.5s;
+    text-decoration: none;
+}
+
+.reply-customize:hover {
+    background-color: #424874;
+    color: #F4EEFF;
 }
 
 .post-title {
@@ -24,7 +50,7 @@ h2 {
 }
 
 .left-elements {
-    width: 140px;
+    width: 160px;
     display: flex;
     justify-content: space-between;
 }
@@ -37,14 +63,15 @@ h2 {
 
 .reply-element {
     font-size: 20px;
-    border: 1px;
-    border-color: black;
+    padding-top: 13px;
+    padding-left: 4px;
 }
 
 .reply-count-element {
     font-size: 20px;
     border: 1px;
     border-color: black;
+    padding-top: 14px;
 }
 
 .custom-button {
@@ -91,16 +118,13 @@ h2 {
 .information-body {
     border: 2px solid #BA55D3;
     border-radius: 5px;
+    margin-bottom: 30px;
 }
 
 .post-user-category {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0px;
-}
-
-.author-name{
-
 }
 
 .category a {
@@ -124,4 +148,21 @@ h2 {
 
 hr {
     color: #BA55D3;
+}
+
+.reply-delete-post {
+    width: 140px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.post-user-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.author-reply-name{
+    padding-top: 8px;
 }

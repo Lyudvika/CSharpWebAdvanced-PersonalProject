@@ -1,5 +1,9 @@
 ﻿@model PostDetailsViewModel
 
+@{
+    ViewBag.Title = Model.Title;
+}
+
 <link rel="stylesheet" href="~/css/ForumCss/forumDetails.css" asp-append-version="true" />
 
 <div class="main-body">
@@ -13,7 +17,7 @@
             <p class="reply-element">
                 <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="reply-customize">Reply</a>
             </p>
-            <p class="reply-count-element">@Model.PostReplies.Count()</p>
+            <p class="reply-count-element">@Model.PostReplies.Count() &#128172</p>
         </div>
 
         <div class="right-elements">
@@ -68,30 +72,49 @@
     <div class="reply-body">
         @foreach (var reply in Model.PostReplies)
         {
-            <p>
-                @reply.AuthorName
-            </p>
-            <p>
-                @reply.Content
-            </p>
-            <p>
-                @reply.ReplyCreated
-            </p>
-            @if (User?.Identity?.Name == reply.AuthorName)
-            {
-            
-            <p class="edit-element">
-                <a asp-controller="Reply" asp-action="Edit" asp-route-id="@reply.Id" class="edit-customize">Edit</a>
+            <div class="information-body">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div class="post-user-buttons">
 
-            </p>
+                            <p class="author-reply-name">
+                                 @reply.AuthorName
+                            </p>
 
-                <p>
-                    <form asp-controller="Reply" asp-action="Delete" asp-route-id="@reply.Id">
-                        <input type="submit" value="Delete" class="delete-element" onclick="return confirm('Are you sure you want to delete your reply?')" />
-                    </form>
+                            @if (User?.Identity?.Name == reply.AuthorName)
+                            {
+                                <div class="reply-delete-post">
+                                    <p>
+                                        <form asp-controller="Reply" asp-action="Delete" asp-route-id="@reply.Id">
+                                            <input type="submit" value="Delete" class="delete-element" onclick="return confirm('Are you sure you want to delete post: @Model.Title?')" />
+                                        </form>
 
-                </p>
-            }
+                                    </p>
+
+                                    <p class="edit-element">
+                                        <a asp-controller="Reply" asp-action="Edit" asp-route-id="@reply.Id" class="edit-customize">Edit</a>
+                                    </p>
+                                </div>
+                            }
+
+                        </div>
+
+                        <hr />
+
+                        <div class="content-date">
+
+                            <div class="content">
+                                <p class="content">@reply.Content</p>
+                            </div>
+
+                            <div class="date-created">
+                                <p class="date-created">@reply.ReplyCreated</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
 
     </div>

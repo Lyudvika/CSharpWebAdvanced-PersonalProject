@@ -1,5 +1,9 @@
 ﻿@model ElementDetailsViewModel
 
+@{
+    ViewBag.Title = Model.Name;
+}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +11,7 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding-top: 80px;
         }
 
         .main-rectangle {
@@ -91,6 +95,7 @@
             border-bottom: 1px solid black;
             width: 100%;
         }
+
     </style>
 </head>
 <body>
@@ -111,21 +116,21 @@
 
         <div class="inner-rectangle-right">
             <div class="bottom-line">
-                <p class="text-paragraph">Atomic Mass: <strong><font color="#8B008B">@Model.AtomicMass</font></strong></p>
+                <p class="text-paragraph">Atomic Mass: <strong><font color="#535C91">@Model.AtomicMass</font></strong></p>
             </div>
 
             <div class="bottom-line">
-                <p class="text-paragraph">Standart State: <strong><font color="#8B008B">@Model.StandardState</font></strong></p>
+                <p class="text-paragraph">Standart State: <strong><font color="#535C91">@Model.StandardState</font></strong></p>
             </div>
 
             <div class="bottom-line">
-                <p class="text-paragraph">Oxidation State: <strong><font color="#8B008B">@Model.OxidationStates</font></strong></p>
+                <p class="text-paragraph">Oxidation State: <strong><font color="#535C91">@Model.OxidationStates</font></strong></p>
             </div>
 
             <div class="bottom-line">
                 <p class="text-paragraph">Chemical Group Block: 
                     <strong>
-                        <font color="#8B008B">
+                        <font color="#535C91">
                             @Model.ChemicalGroupBlock.Name
                         </font>
                     </strong>
@@ -135,13 +140,13 @@
             @if (Model.MeltingPoint != null)
             {
                 <div class="bottom-line">
-                    <p class="text-paragraph">Melting Point: <strong><font color="#8B008B">@Model.MeltingPoint</font></strong></p>
+                    <p class="text-paragraph">Melting Point: <strong><font color="#535C91">@Model.MeltingPoint K</font></strong></p>
                 </div>
             }
             @if (Model.BoilingPoint != null)
             {
                 <div class="bottom-line">
-                    <p class="text-paragraph">Boiling Point: <strong><font color="#8B008B">@Model.BoilingPoint</font></strong></p>
+                    <p class="text-paragraph">Boiling Point: <strong><font color="#535C91">@Model.BoilingPoint K</font></strong></p>
                 </div>
             }
         </div>
