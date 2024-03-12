@@ -10,7 +10,6 @@
 h2 {
     margin-top: 4px;
     font-size: 25px;
-    
 }
 
 hr {
@@ -82,7 +81,6 @@ hr {
 
 .delete-element {
     background-color: red;
-
     color: white;
     text-align: center;
     text-decoration: none;
@@ -131,9 +129,6 @@ hr {
     color: #BA55D3;
     text-decoration: none;
     outline: none;
-}
-
-.content-date {
 }
 
 .content{

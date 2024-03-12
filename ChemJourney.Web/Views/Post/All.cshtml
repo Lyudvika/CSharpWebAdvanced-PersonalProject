@@ -9,7 +9,9 @@
 </head>
 <body>
     <div class="search-bar">
-        <input class="search" type="text" placeholder="Search">
+        <form asp-controller="Post" asp-action="All">
+            <input name="searchString" class="search" type="search" placeholder="Search">
+        </form>
     </div>
 
     <div class="sidebar">

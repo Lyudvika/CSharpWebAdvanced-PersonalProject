@@ -17,10 +17,17 @@ namespace ChemJourney.Web.Controllers
 		}
 
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(string searchString)
         {
-            IEnumerable<PostAllViewModel> viewModel = await postService.GetPostsAsync();
-            return View(viewModel);
+            var model = await postService.GetPostsAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(p => p.Title.ToLower().Contains(searchString.ToLower()) || 
+                p.Content.ToLower().Contains(searchString.ToLower())).ToList();
+            }
+
+            return View(model);
         }
 
         [AllowAnonymous]
