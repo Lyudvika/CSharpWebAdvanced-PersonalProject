@@ -10,16 +10,18 @@ namespace ChemJourney.Web.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
+        private readonly ICategoryService categoryService;
 
-		public PostController(IPostService postService)
+        public PostController(IPostService postService, ICategoryService categoryService)
         {
             this.postService = postService;
+            this.categoryService = categoryService;
 		}
 
         [AllowAnonymous]
         public async Task<IActionResult> All(string searchString)
         {
-            var model = await postService.GetPostsAsync();
+            IEnumerable<PostAllViewModel> model = await postService.GetPostsAsync();
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -54,7 +56,7 @@ namespace ChemJourney.Web.Controllers
 		{
             var model = new PostFormViewModel
             {
-                Categories = await postService.GetCategoriesAsync()
+                Categories = await categoryService.GetCategoriesAsync()
             };
 
             return View(model);
@@ -63,14 +65,21 @@ namespace ChemJourney.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(PostFormViewModel model)
 		{
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
+            bool categoryExists = await categoryService.ExistsByIdAsync(model.CategoryId);
 
-			var userId = User.Id();
+            if (!categoryExists)
+                ModelState.AddModelError(nameof(model.CategoryId), "Selected category doesn't exist!");
 
-			try
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await categoryService.GetCategoriesAsync();
+
+                return View(model);
+            }
+
+            var userId = User.Id();
+
+            try
 			{
 				await postService.AddPostAsync(model, userId);
 			}
@@ -81,7 +90,7 @@ namespace ChemJourney.Web.Controllers
 				return View(model);
 			}
 
-			model.Categories = await postService.GetCategoriesAsync();
+			model.Categories = await categoryService.GetCategoriesAsync();
 			return RedirectToAction(nameof(All));
 		}
 
@@ -91,7 +100,7 @@ namespace ChemJourney.Web.Controllers
             {
                 PostFormViewModel postModel =
                     await this.postService.GetForEditOrDeleteByIdAsync(id);
-                postModel.Categories = await postService.GetCategoriesAsync();
+                postModel.Categories = await categoryService.GetCategoriesAsync();
 
                 return View(postModel);
             }
@@ -106,7 +115,7 @@ namespace ChemJourney.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                postModel.Categories = await postService.GetCategoriesAsync();
+                postModel.Categories = await categoryService.GetCategoriesAsync();
 
                 return View(postModel);
             }

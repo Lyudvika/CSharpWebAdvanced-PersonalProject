@@ -17,14 +17,13 @@ namespace ChemJourney.Services.Data
 
         public async Task AddReplyAsync(PostReplyFormViewModel model, string userId, int id)
         {
-            PostReply postReply = new PostReply()
+            PostReply postReply = new()
             {
                 Content = model.Content,
                 DateTime = DateTime.UtcNow,
-                AuthorId = Guid.Parse(userId)
+                AuthorId = Guid.Parse(userId),
+                PostId = id
             };
-
-            postReply.PostId = id;
 
             await this.dbContext.PostReplies.AddAsync(postReply);
             await this.dbContext.SaveChangesAsync();

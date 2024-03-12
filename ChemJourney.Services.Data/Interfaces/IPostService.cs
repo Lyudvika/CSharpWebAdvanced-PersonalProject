@@ -12,7 +12,5 @@ namespace ChemJourney.Services.Data.Interfaces
         Task<PostFormViewModel> GetForEditOrDeleteByIdAsync(int id);
         Task EditPostAsync(PostFormViewModel model, int id);
         Task DeletePostAsync(int id);
-
-        Task<IEnumerable<CategoryViewModel>> GetCategoriesAsync();
 	}
 }

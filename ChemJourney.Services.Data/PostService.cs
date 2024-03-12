@@ -87,7 +87,7 @@ namespace ChemJourney.Services.Data
 
 		public async Task AddPostAsync(PostFormViewModel model, string userId)
 		{
-			Post post = new Post()
+			Post post = new()
 			{
 				Title = model.Title,
 				Content = model.Content,
@@ -96,7 +96,7 @@ namespace ChemJourney.Services.Data
 				AuthorId = Guid.Parse(userId)
 			};
 
-			await this.dbContext.Posts.AddAsync(post);
+            await this.dbContext.Posts.AddAsync(post);
 			await this.dbContext.SaveChangesAsync();
 		}
 
@@ -138,18 +138,6 @@ namespace ChemJourney.Services.Data
 
 			post.IsDeleted = true;
 			await this.dbContext.SaveChangesAsync();
-		}
-
-		public async Task<IEnumerable<CategoryViewModel>> GetCategoriesAsync()
-		{
-			return await dbContext.Categories
-				.AsNoTracking()
-				.Select(t => new CategoryViewModel
-				{
-					Id = t.Id,
-					Name = t.Name
-				})
-				.ToListAsync();
 		}
 
 		private async Task<IEnumerable<PostReplyFormViewModel>> GetPostReplies(int id)
