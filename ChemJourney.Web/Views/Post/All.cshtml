@@ -1,34 +1,5 @@
 ﻿@model IEnumerable<PostAllViewModel>
 
-<table>
-</table>
-<table class="table table-bordered table-hover">
-	<tbody>
-		@foreach(var post in Model)
-		{
-			<tr>
-				<td>
-                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">@post.Title</a>
-						@post.Title
-				</td>
-				<td>
-					@post.AuthorName
-				</td>
-				<td>
-					@post.DateTime
-				</td>
-				<td>
-					@post.RepliesCount	
-				</td>
-
-				<td>
-					<a asp-controller="Post" asp-action="AllByCategory" asp-route-category="@post.Category" class="btn btn-warning mb-2 w-100 p-3 fw-bold">@post.Category</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
-
 <head>
     <link rel="stylesheet" href="~/css/ForumCss/forumAll.css" asp-append-version="true" />
 </head>
@@ -39,26 +10,27 @@
 
     <div class="sidebar">
         <div class="new-post-button">
-            <button class="post-button">
-                New Post
-            </button>
+                <a asp-controller="Post" asp-action="Create" class="post-button">New Post</a>
         </div>
         <div class="categories-list">
-            <li type="circle">
-                Organic
-            </li>
-            <li type="circle">
-                Inorganic
-            </li>
-            <li type="circle">
-                Biochemistry
-            </li>
-            <li type="circle">
-                Biochemistry
-            </li>
-            <li type="circle">
-                Biochemistry
-            </li>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Organic Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Physical Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Analytical Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Inorganic Chemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Biochemistry</a>
+            </p>
+            <p class="category">
+                <a asp-controller="Post" asp-action="AllByCategory" asp-route-category="Organic Chemistry" class="curr-category">> Undefined</a>
+            </p>
         </div>
     </div>
 
@@ -67,11 +39,6 @@
         {
             <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">
                 <div class="post-body">
-                    <div class="post-owner">
-                        <p>
-                            @post.AuthorName
-                        </p>
-                    </div>
                     <div class="post-information">
                         <div class="post-title">
                             <p>
@@ -97,7 +64,7 @@
                         </div>
                         <div class="post-replies">
                             <p>
-                                @post.RepliesCount
+                                @post.RepliesCount &#128172
                             </p>
                         </div>
                     </div>

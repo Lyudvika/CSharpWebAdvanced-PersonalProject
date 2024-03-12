@@ -3,7 +3,6 @@ using ChemJourney.Web.Extensions;
 using ChemJourney.Web.ViewModels.Post;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace ChemJourney.Web.Controllers
 {

@@ -4,6 +4,7 @@ using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.Post;
 using ChemJourney.Web.ViewModels.Reply;
 using Microsoft.EntityFrameworkCore;
+using static ChemJourney.Common.EntityValidationConstants.DateTimeFormat;
 
 namespace ChemJourney.Services.Data
 {
@@ -20,17 +21,18 @@ namespace ChemJourney.Services.Data
 		{
 			IEnumerable<PostAllViewModel> posts = await this.dbContext
 				.Posts
-				.Where( p=> p.IsDeleted == false)
+				.Where(p => p.IsDeleted == false)
 				.Select(p => new PostAllViewModel
 				{
 					Id = p.Id,
 					Title = p.Title,
 					Content = p.Content,
 					Category = p.Category.Name,
-					DateTime = p.DateTime.ToString(),
+					DateTime = p.DateTime.ToString(DateFormat),
 					AuthorName = p.Author.UserName,
 					RepliesCount = p.PostReplies.Count
-				}).ToArrayAsync();
+				})
+				.ToArrayAsync();
 
 			return posts;
 		}
