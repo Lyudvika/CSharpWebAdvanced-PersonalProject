@@ -11,11 +11,13 @@ namespace ChemJourney.Web.Controllers
     {
         private readonly IPostService postService;
         private readonly ICategoryService categoryService;
+        private readonly IUserService userService;
 
-        public PostController(IPostService postService, ICategoryService categoryService)
+        public PostController(IPostService postService, ICategoryService categoryService, IUserService userService)
         {
             this.postService = postService;
             this.categoryService = categoryService;
+            this.userService = userService;
 		}
 
         [AllowAnonymous]
@@ -42,16 +44,27 @@ namespace ChemJourney.Web.Controllers
         [AllowAnonymous]
 		public async Task<IActionResult> Details(int id)
 		{
-			PostDetailsViewModel viewModel = await postService.GetPostById(id);
+            bool postExists = await postService.ExistsByIdAsync(id);
 
-			if (viewModel == null)
-			{
-				return NotFound();
-			}
+            if (!postExists)
+            {
+                return RedirectToAction(nameof(All));
+            }
 
-			return View(viewModel);
+            try
+            {
+                PostDetailsViewModel viewModel = await postService.GetPostById(id);
+
+                return View(viewModel);
+            }
+            catch(Exception)
+            {
+
+                return RedirectToAction(nameof(All));
+            }
 		}
 
+        [HttpGet]
 		public async Task<IActionResult> Create()
 		{
             var model = new PostFormViewModel
@@ -94,8 +107,24 @@ namespace ChemJourney.Web.Controllers
 			return RedirectToAction(nameof(All));
 		}
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            bool postExists = await postService.ExistsByIdAsync(id);
+
+            if (!postExists)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            string userId = User.Id();
+            bool isUserTheOwner = await userService.IsUserOwnerOfPostById(userId, id);
+
+            if (!isUserTheOwner)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
             try
             {
                 PostFormViewModel postModel =
@@ -120,9 +149,26 @@ namespace ChemJourney.Web.Controllers
                 return View(postModel);
             }
 
+            bool postExists = await postService.ExistsByIdAsync(id);
+
+            if (!postExists)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            string userId = User.Id();
+            bool isUserTheOwner = await userService.IsUserOwnerOfPostById(userId, id);
+
+            if (!isUserTheOwner)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
             try
             {
                 await postService.EditPostAsync(postModel, id);
+
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch (Exception)
             {
@@ -130,8 +176,6 @@ namespace ChemJourney.Web.Controllers
 
                 return View(postModel);
             }
-
-			return RedirectToAction(nameof(Details), new { id });
 		}
 
 		public async Task<IActionResult> Delete(int id)

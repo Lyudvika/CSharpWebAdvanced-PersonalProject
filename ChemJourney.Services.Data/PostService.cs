@@ -17,7 +17,15 @@ namespace ChemJourney.Services.Data
             this.dbContext = dbContext;
         }
 
-		public async Task<IEnumerable<PostAllViewModel>> GetPostsAsync()
+        public async Task<bool> ExistsByIdAsync(int postId)
+        {
+            return await dbContext
+                .Posts
+                .Where(p => p.IsDeleted == false)
+                .AnyAsync(p => p.Id == postId);
+        }
+
+        public async Task<IEnumerable<PostAllViewModel>> GetPostsAsync()
 		{
 			IEnumerable<PostAllViewModel> posts = await this.dbContext
 				.Posts
