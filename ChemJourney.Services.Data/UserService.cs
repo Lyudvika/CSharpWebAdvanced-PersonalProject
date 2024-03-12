@@ -19,5 +19,13 @@ namespace ChemJourney.Services.Data
                 .Where(p => p.AuthorId == Guid.Parse(userId))
                 .AnyAsync(p => p.Id == postId);
         }
+
+        public async Task<bool> IsUserOwnerOfPostReplyById(string userId, int replyId)
+        {
+            return await dbContext
+                .PostReplies
+                .Where(p => p.AuthorId == Guid.Parse(userId))
+                .AnyAsync(p => p.Id == replyId);
+        }
     }
 }

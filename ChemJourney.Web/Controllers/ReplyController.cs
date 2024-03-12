@@ -10,10 +10,12 @@ namespace ChemJourney.Web.Controllers
     public class ReplyController : Controller
     {
         private readonly IReplyService replyService;
+        private readonly IUserService userService;
 
-        public ReplyController(IReplyService replyService)
+        public ReplyController(IReplyService replyService, IUserService userService)
         {
             this.replyService = replyService;
+            this.userService = userService;
         }
 
         public IActionResult Create()
@@ -36,6 +38,8 @@ namespace ChemJourney.Web.Controllers
             try
             {
                 await replyService.AddReplyAsync(model, userId,  id);
+
+                return RedirectToAction("Details", "Post", new { id });
             }
             catch (Exception)
             {
@@ -43,12 +47,25 @@ namespace ChemJourney.Web.Controllers
 
                 return View(model);
             }
-
-            return RedirectToAction("Details", "Post", new { id });
         }
 
         public async Task<IActionResult> Edit(int id)
         {
+            bool replyExists = await replyService.ExistsByIdAsync(id);
+
+            if (!replyExists)
+            {
+                return RedirectToAction("All", "Post");
+            }
+
+            string userId = User.Id();
+            bool isUserTheOwner = await userService.IsUserOwnerOfPostReplyById(userId, id);
+
+            if (!isUserTheOwner)
+            {
+                return RedirectToAction("All", "Post");
+            }
+
             try
             {
                 PostReplyFormViewModel postModel =
@@ -70,9 +87,28 @@ namespace ChemJourney.Web.Controllers
                 return View(postModel);
             }
 
+            bool replyExists = await replyService.ExistsByIdAsync(id);
+
+            if (!replyExists)
+            {
+                return RedirectToAction("All", "Post");
+            }
+
+            string userId = User.Id();
+            bool isUserTheOwner = await userService.IsUserOwnerOfPostReplyById(userId, id);
+
+            if (!isUserTheOwner)
+            {
+                return RedirectToAction("All", "Post");
+            }
+
             try
             {
                 await replyService.EditReplyAsync(postModel, id);
+
+                id = await replyService.GetPostId(id);
+
+                return RedirectToAction("Details", "Post", new { id });
             }
             catch (Exception)
             {
@@ -80,10 +116,6 @@ namespace ChemJourney.Web.Controllers
 
                 return View(postModel);
             }
-
-            id = await replyService.GetPostId(id);
-
-            return RedirectToAction("Details", "Post", new { id });
         }
 
         public async Task<IActionResult> Delete(int id)

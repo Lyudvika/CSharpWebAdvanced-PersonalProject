@@ -15,6 +15,14 @@ namespace ChemJourney.Services.Data
             this.dbContext = dbContext;
         }
 
+        public async Task<bool> ExistsByIdAsync(int replyId)
+        {
+            return await dbContext
+                .PostReplies
+                .Where(p => p.IsDeleted == false)
+                .AnyAsync(p => p.Id == replyId);
+        }
+
         public async Task AddReplyAsync(PostReplyFormViewModel model, string userId, int id)
         {
             PostReply postReply = new()
