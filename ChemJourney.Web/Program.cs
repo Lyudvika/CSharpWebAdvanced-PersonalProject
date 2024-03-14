@@ -1,11 +1,16 @@
 using ChemJourney.Services.Data.Interfaces;
+using ChemJourney.Web.ModelBinders;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
 
 builder.Services.AddApplicationServices(typeof(IElementService));
 builder.Services.AddApplicationServices(typeof(IPostService));
