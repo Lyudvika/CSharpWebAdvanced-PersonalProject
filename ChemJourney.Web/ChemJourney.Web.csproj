@@ -28,8 +28,4 @@
     <ProjectReference Include="..\ChemJourney.Web.ViewModels\ChemJourney.Web.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Quiz\" />
-  </ItemGroup>
-
 </Project>

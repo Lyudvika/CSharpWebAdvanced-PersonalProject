@@ -1,20 +1,29 @@
-﻿using ChemJourney.Services.Data.Interfaces;
+﻿using ChemJourney.Services.Data;
+using ChemJourney.Services.Data.Interfaces;
+using ChemJourney.Web.ViewModels.Quiz;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChemJourney.Web.Controllers
 {
+    [Authorize]
     public class QuizController : Controller
     {
         private readonly IQuizService quizService;
+        private readonly ICategoryService categoryService;
 
-        public QuizController(IQuizService quizService)
+        public QuizController(IQuizService quizService, ICategoryService categoryService)
         {
             this.quizService = quizService;
+            this.categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> All()
         {
-            return View();
+            IEnumerable<QuizAllViewModel> model = await quizService.GetQuizzesAsync();
+
+            return View(model);
         }
     }
 }

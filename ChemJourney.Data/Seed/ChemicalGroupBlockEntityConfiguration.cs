@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ChemJourney.Data.Configurations
+namespace ChemJourney.Data.Seed
 {
     public class ChemicalGroupBlockEntityConfiguration : IEntityTypeConfiguration<ChemicalGroupBlock>
     {

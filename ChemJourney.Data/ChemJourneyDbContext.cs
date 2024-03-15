@@ -43,7 +43,9 @@
             builder.ApplyConfiguration(new SeedPostRepliesEntityConfiguration());
 
             builder.ApplyConfiguration(new QuizEntityConfiguration());
+            builder.ApplyConfiguration(new SeedQuizzesEntityConfiguration());
             builder.ApplyConfiguration(new QuizQuestionEntityConfiguration());
+            builder.ApplyConfiguration(new SeedQuizQuestionsEntityConfiguration());
             builder.ApplyConfiguration(new QuizScoreEntityConfiguration());
 
             base.OnModelCreating(builder);

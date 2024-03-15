@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddApplicationServices(typeof(IElementService));
 builder.Services.AddApplicationServices(typeof(IPostService));
 builder.Services.AddApplicationServices(typeof(IReplyService));
+builder.Services.AddApplicationServices(typeof(IQuizService));
 
 WebApplication app = builder.Build();
 
