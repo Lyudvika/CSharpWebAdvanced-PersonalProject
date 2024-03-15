@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChemJourney.Web.Controllers
 {
-    public class ConverterController : Controller
+    public class QuizController : Controller
     {
-        private readonly IConverterService converterService;
+        private readonly IQuizService quizService;
 
-        public ConverterController(IConverterService converterService)
+        public QuizController(IQuizService quizService)
         {
-            this.converterService = converterService;
+            this.quizService = quizService;
         }
 
         public IActionResult Index()

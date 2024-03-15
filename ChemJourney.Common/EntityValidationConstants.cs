@@ -42,5 +42,11 @@
         {
             public const string DateFormat = "dd/MM/yyyy HH:mm";
         }
+
+        public static class Quiz
+        {
+            public const int DefaultAllowedMaxLength = 150;
+            public const int DefaultAllowedMinLength = 1;
+        }
     }
 }

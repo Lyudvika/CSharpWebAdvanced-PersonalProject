@@ -10,6 +10,7 @@ namespace ChemJourney.Data.Models
         public Category()
         {
             Posts = new HashSet<Post>();
+            Quizzes = new HashSet<Quiz>();
         }
 
         [Key]
@@ -23,5 +24,8 @@ namespace ChemJourney.Data.Models
 
         [Comment("Posts collection")]
         public ICollection<Post> Posts { get; set; }
+
+        [Comment("Quiz collection")]
+        public ICollection<Quiz> Quizzes { get; set; }
     }
 }

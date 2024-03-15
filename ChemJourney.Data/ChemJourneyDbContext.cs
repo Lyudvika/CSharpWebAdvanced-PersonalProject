@@ -24,7 +24,13 @@
 
         public DbSet<PostReply> PostReplies { get; set; } = null!;
 
-		protected override void OnModelCreating(ModelBuilder builder)
+        public DbSet<Quiz> Quizzes { get; set; } = null!;
+
+        public DbSet<QuizQuestion> QuizQuestions { get; set; } = null!;
+
+        public DbSet<QuizScore> QuizScores { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ElementEntityConfiguration());
             builder.ApplyConfiguration(new ChemicalGroupBlockEntityConfiguration());
@@ -35,6 +41,10 @@
             builder.ApplyConfiguration(new CategoryEntityConfiguration());
             builder.ApplyConfiguration(new SeedPostsEntityConfiguration());
             builder.ApplyConfiguration(new SeedPostRepliesEntityConfiguration());
+
+            builder.ApplyConfiguration(new QuizEntityConfiguration());
+            builder.ApplyConfiguration(new QuizQuestionEntityConfiguration());
+            builder.ApplyConfiguration(new QuizScoreEntityConfiguration());
 
             base.OnModelCreating(builder);
         }
