@@ -1,0 +1,23 @@
+﻿@model QuizViewModel
+
+<form method="post" action="/Quiz/SubmitQuiz">
+    <input type="hidden" name="id" value="@Model.Id">
+
+    @foreach (var question in Model.QuizQuestions)
+    {
+        <h3>@question.QuestionText</h3>
+        <ul>
+            @foreach (var option in question.Options)
+            {
+                <li>
+                    <label>
+                        <input type="radio" name="SelectedOptions[@question.Id]" value="@option">
+                        @option
+                    </label>
+                </li>
+            }
+        </ul>
+    }
+    
+    <button type="submit">Submit Quiz</button>
+</form>
