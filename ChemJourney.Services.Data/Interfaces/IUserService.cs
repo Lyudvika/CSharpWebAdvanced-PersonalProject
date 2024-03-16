@@ -2,7 +2,8 @@
 {
     public interface IUserService
     {
-        Task<bool> IsUserOwnerOfPostById(string userId, int postId);
-        Task<bool> IsUserOwnerOfPostReplyById(string userId, int replyId);
+        Task<bool> IsUserOwnerOfPostByIdAsync(string userId, int postId);
+        Task<bool> IsUserOwnerOfPostReplyByIdAsync(string userId, int replyId);
+        Task<bool> IsUserOwnerOfQuizScoreByIdAsync(string userId, int quizScoreId);
     }
 }

@@ -118,7 +118,7 @@ namespace ChemJourney.Web.Controllers
             }
 
             string userId = User.Id();
-            bool isUserTheOwner = await userService.IsUserOwnerOfPostById(userId, id);
+            bool isUserTheOwner = await userService.IsUserOwnerOfPostByIdAsync(userId, id);
 
             if (!isUserTheOwner)
             {
@@ -157,7 +157,7 @@ namespace ChemJourney.Web.Controllers
             }
 
             string userId = User.Id();
-            bool isUserTheOwner = await userService.IsUserOwnerOfPostById(userId, id);
+            bool isUserTheOwner = await userService.IsUserOwnerOfPostByIdAsync(userId, id);
 
             if (!isUserTheOwner)
             {

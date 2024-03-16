@@ -1,4 +1,5 @@
 ﻿using ChemJourney.Services.Data.Interfaces;
+using ChemJourney.Web.Extensions;
 using ChemJourney.Web.ViewModels.Quiz;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +11,17 @@ namespace ChemJourney.Web.Controllers
     {
         private readonly IQuizService quizService;
         private readonly ICategoryService categoryService;
+        private readonly IUserService userService;
 
-        public QuizController(IQuizService quizService, ICategoryService categoryService)
+        public QuizController(IQuizService quizService, ICategoryService categoryService, IUserService userService)
         {
             this.quizService = quizService;
             this.categoryService = categoryService;
+            this.userService = userService;
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             IEnumerable<QuizAllViewModel> model = await quizService.GetQuizzesAsync();
@@ -37,7 +41,7 @@ namespace ChemJourney.Web.Controllers
 
             try
             {
-                QuizViewModel viewModel = await quizService.GetQuizById(id);
+                QuizViewModel viewModel = await quizService.GetQuizByIdAsync(id);
 
                 return View(viewModel);
             }
@@ -50,30 +54,33 @@ namespace ChemJourney.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitQuiz(int id, Dictionary<int, string> selectedOptions)
         {
-            int score = await quizService.CalculateQuizScore(id, selectedOptions);
+            int score = await quizService.CalculateQuizScoreAsync(id, selectedOptions);
 
-            return RedirectToAction("QuizResults", new { id, score });
+            int quizScore = await quizService.SaveQuizScoreAndReturnIdAsync(User.Id(), id, score);
+
+            return RedirectToAction("QuizResult", new { id = quizScore });
         }
 
         [HttpGet]
-        public async Task<IActionResult> QuizResults(int id, int score)
+        public async Task<IActionResult> QuizResult(int id)
         {
-            var quiz = await quizService.GetQuizById(id);
+            string userId = User.Id();
 
-            if (quiz == null)
+            bool isUserTheOwner = await userService.IsUserOwnerOfQuizScoreByIdAsync(userId, id);
+
+            if (!isUserTheOwner)
+            {
+                return BadRequest();
+            }
+
+            QuizScoreViewModel quizScore = await quizService.GetQuizScoreByIdAsync(id);
+
+            if (quizScore == null)
             {
                 return NotFound();
             }
 
-            var viewModel = new QuizResultsViewModel
-            {
-                Id = id,
-                Score = score,
-                Title = quiz.Title,
-                Description = quiz.Description
-            };
-
-            return View(viewModel);
+            return View(quizScore);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ChemJourney.Web.ViewModels.Quiz
 {
-    public class QuizResultsViewModel
+    public class QuizScoreViewModel
     {
         public int Id { get; set; }
 

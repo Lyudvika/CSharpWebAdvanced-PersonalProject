@@ -1,4 +1,5 @@
-﻿using ChemJourney.Services.Data.Interfaces;
+﻿using ChemJourney.Data.Models;
+using ChemJourney.Services.Data.Interfaces;
 using ChemJourney.Web.Data;
 using ChemJourney.Web.ViewModels.Quiz;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ namespace ChemJourney.Services.Data
             return quizzes;
         }
 
-        public async Task<QuizViewModel> GetQuizById(int id)
+        public async Task<QuizViewModel> GetQuizByIdAsync(int id)
         {
             var model = await dbContext
                 .Quizzes
@@ -56,14 +57,14 @@ namespace ChemJourney.Services.Data
             if (model == null)
                 throw new InvalidOperationException("Quiz not found.");
 
-            model.QuizQuestions = await GetQuizQuestions(id);
+            model.QuizQuestions = await GetQuizQuestionsAsync(id);
 
             return model;
         }
 
-        public async Task<int> CalculateQuizScore(int quizId, Dictionary<int, string> selectedOptions)
+        public async Task<int> CalculateQuizScoreAsync(int quizId, Dictionary<int, string> selectedOptions)
         {
-            var correctAnswers = await GetCorrectAnswersForQuiz(quizId);
+            Dictionary<int, string> correctAnswers = await GetCorrectAnswersForQuizAsync(quizId);
 
             int score = 0;
 
@@ -71,7 +72,7 @@ namespace ChemJourney.Services.Data
             {
                 string selectedOption = selectedOptions[questionId];
 
-                if (correctAnswers.TryGetValue(questionId, out string correctOption) && selectedOption == correctOption)
+                if (correctAnswers.TryGetValue(questionId, out string? correctOption) && selectedOption == correctOption)
                 {
                     score++;
                 }
@@ -80,17 +81,51 @@ namespace ChemJourney.Services.Data
             return score;
         }
 
-        private async Task<Dictionary<int, string>> GetCorrectAnswersForQuiz(int quizId)
+        public async Task<int> SaveQuizScoreAndReturnIdAsync(string userId, int quizId, int score)
         {
-            var quizQuestions = await dbContext.QuizQuestions
-            .Where(qq => qq.QuizId == quizId)
-            .Select(qq => new { qq.Id, qq.CorrectOption })
-            .ToListAsync();
+            QuizScore quizScore = new()
+            {
+                UserId = Guid.Parse(userId),
+                QuizId = quizId,
+                Score = score,
+                DateCompleted = DateTime.UtcNow
+            };
+
+            await this.dbContext.QuizScores.AddAsync(quizScore);
+            await this.dbContext.SaveChangesAsync();
+
+            return quizScore.Id;
+        }
+
+        public async Task<QuizScoreViewModel> GetQuizScoreByIdAsync(int id)
+        {
+            QuizScoreViewModel quizScore= await this.dbContext
+                .QuizScores
+                .Where(qs => qs.Id == id)
+                .Select(q => new QuizScoreViewModel
+                {
+                    Id = q.Id,
+                    Title = q.Quiz.Title,
+                    Description = q.Quiz.Description,
+                    Score = q.Score
+                })
+                .FirstAsync();
+
+            return quizScore;
+        }
+
+        private async Task<Dictionary<int, string>> GetCorrectAnswersForQuizAsync(int quizId)
+        {
+            var quizQuestions = await dbContext
+                .QuizQuestions
+                .Where(qq => qq.QuizId == quizId)
+                .Select(qq => new { qq.Id, qq.CorrectOption })
+                .ToListAsync();
 
             return quizQuestions.ToDictionary(qq => qq.Id, qq => qq.CorrectOption);
         }
 
-        private async Task<IEnumerable<QuizQuestionsViewModel>> GetQuizQuestions(int id)
+        private async Task<IEnumerable<QuizQuestionsViewModel>> GetQuizQuestionsAsync(int id)
         {
             return await dbContext
                 .QuizQuestions
